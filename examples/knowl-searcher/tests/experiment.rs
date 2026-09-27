@@ -7,7 +7,6 @@ use std::collections::HashMap;
 use knowl_searcher::bm25::{Bm25, tokenize};
 use knowl_searcher::chunk::chunk_docs;
 use knowl_searcher::corpus::{Doc, Kind, Tier, build_units};
-use knowl_searcher::rule::{fuse, route_affinity};
 use quanttide_founder::memory::states::Destination;
 
 fn doc(path: &str, kind: Kind, text: &str) -> Doc {
@@ -98,47 +97,6 @@ fn tokenizer_handles_cjk_and_ascii() {
     assert!(tokens.contains(&"github".to_string()));
     assert!(tokens.contains(&"第二".to_string()));
     assert!(tokens.contains(&"脑".to_string()));
-}
-
-#[test]
-fn route_affinity_prefers_matching_kind_and_keeps_fiction_neutral() {
-    assert_eq!(route_affinity(Destination::Insight, Kind::Insight), 1.0);
-    assert_eq!(route_affinity(Destination::Insight, Kind::Profile), 0.0);
-    assert_eq!(route_affinity(Destination::Roadmap, Kind::Roadmap), 1.0);
-    // fiction 中性：任何路由下都保底可达
-    assert_eq!(route_affinity(Destination::Insight, Kind::Emotion), 0.2);
-    assert_eq!(route_affinity(Destination::Intention, Kind::Emotion), 0.2);
-}
-
-#[test]
-fn fuse_normalizes_and_adds_bonuses() {
-    let base = vec![10.0, 5.0];
-    let units = [
-        knowl_searcher::corpus::Unit {
-            path: "memory/default/insight/x.md".into(),
-            kind: Kind::Insight,
-            title: "已确认".into(),
-            line_start: 1,
-            line_end: 2,
-            text: String::new(),
-            tier: Some(Tier::Confirmed),
-        },
-        knowl_searcher::corpus::Unit {
-            path: "memory/default/profile/y.md".into(),
-            kind: Kind::Profile,
-            title: "主题".into(),
-            line_start: 1,
-            line_end: 2,
-            text: String::new(),
-            tier: None,
-        },
-    ];
-    // route("发现") → Insight：insight 单元拿满路由亲和 + 分级加权
-    let refs: Vec<&knowl_searcher::corpus::Unit> = units.iter().collect();
-    let fused = fuse(&base, "我发现了一件事", &refs);
-    assert!(fused[0] > fused[1], "亲和单元应被抬升: {fused:?}");
-    // 基础分归一：最高分恰好 1.0 + 加成
-    assert!((fused[0] - (1.0 + 0.30 + 0.10)).abs() < 1e-9);
 }
 
 #[test]

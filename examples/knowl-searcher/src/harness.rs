@@ -13,7 +13,6 @@ use crate::chunk::{Chunk, chunk_docs};
 use crate::corpus::{Unit, build_units, load_corpus};
 use crate::embed::{Embedder, cosine, embed_text};
 use crate::metrics::{hit, is_gold, jaccard, recall_at_k, reciprocal_rank};
-use crate::rule::fuse;
 
 /// 融合前的候选数。
 const CANDIDATES: usize = 30;
@@ -175,7 +174,7 @@ fn query_vector(
     v
 }
 
-/// 单臂检索：rag=块索引，idx=单元索引，idx-rule=单元索引+规则融合。
+/// 单臂检索：rag=块索引，idx=单元索引。
 fn retrieve(
     arm: &str,
     scorer: &Scorer,
@@ -205,23 +204,6 @@ fn retrieve(
             .take(topk)
             .map(|(i, s)| unit_hit(&units[i], s))
             .collect(),
-        "idx-rule" => {
-            let candidates = scorer.unit_candidates(query, units);
-            let base: Vec<f64> = candidates.iter().map(|(_, s)| *s).collect();
-            let cand_units: Vec<&Unit> = candidates.iter().map(|(i, _)| &units[*i]).collect();
-            let fused = fuse(&base, query, &cand_units);
-            let mut reranked: Vec<(usize, f64)> = candidates
-                .iter()
-                .enumerate()
-                .map(|(pos, (idx, _))| (*idx, fused[pos]))
-                .collect();
-            reranked.sort_by(|a, b| b.1.partial_cmp(&a.1).unwrap().then(a.0.cmp(&b.0)));
-            reranked
-                .into_iter()
-                .take(topk)
-                .map(|(i, s)| unit_hit(&units[i], s))
-                .collect()
-        }
         _ => unreachable!("未知臂: {arm}"),
     }
 }
@@ -309,7 +291,7 @@ pub fn run(cfg: &Config) -> Result<(), Box<dyn Error>> {
         }
     };
 
-    let arms = ["rag", "idx", "idx-rule"];
+    let arms = ["rag", "idx"];
     let mut summaries = Vec::new();
     let mut outcomes = Vec::new();
 
