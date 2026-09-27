@@ -11,5 +11,6 @@ pub mod bm25;
 pub mod chunk;
 pub mod corpus;
 pub mod embed;
+pub mod emotion;
 pub mod harness;
 pub mod metrics;

@@ -1,0 +1,446 @@
+{
+  "scorer": "bm25",
+  "query_mode": "first",
+  "segments": 37,
+  "diaries": 6,
+  "covered": 0,
+  "top3_hit_rate": null,
+  "random_baseline": 0.08108108108108109,
+  "self_retrieval_top3": 1.0,
+  "top1_scores": [
+    17.361585203734542,
+    11.219356576075757,
+    35.46216135815663,
+    23.43892039558828,
+    60.5793271577537,
+    11.70243793498205
+  ],
+  "tau2_hits": 0,
+  "tau1_drops": 0,
+  "rules_applied": false,
+  "related_p_at_3": 0.1111111111111111,
+  "related_hits": 2,
+  "rule": {
+    "tau1": 0.55,
+    "tau2": 0.92,
+    "line_tau": 0.7,
+    "retrieve_k": 8,
+    "top3": 3
+  },
+  "outcomes": [
+    {
+      "file": "fiction/观察站/1_情绪日记/事业进步.md",
+      "query": "今天想写的是成功拿下订单的过程",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 17.361585203734542,
+      "note": "日志中没有\"成功拿下订单\"这一事件的记录，2026-09-23.md#3（数据重新开张、案例重启）与 #4（付费商业模式）只是业务与商业化进展的泛泛相关，读之无法认出是该日记底稿。",
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-24.md#2",
+          "line": "12-31",
+          "date": "2026-09-24",
+          "score": 17.361585203734542,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 14.370013716617292,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#4",
+          "line": "37-55",
+          "date": "2026-09-24",
+          "score": 14.104263470160914,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#3",
+          "line": "16-30",
+          "date": "2026-09-23",
+          "score": 13.129681896316924,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#5",
+          "line": "40-46",
+          "date": "2026-09-23",
+          "score": 11.708956686085168,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#4",
+          "line": "74-98",
+          "date": "2026-09-26",
+          "score": 9.050436564494808,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#2",
+          "line": "32-54",
+          "date": "2026-09-26",
+          "score": 8.940310137755516,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#5",
+          "line": "99-102",
+          "date": "2026-09-26",
+          "score": 8.795914380085838,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 0
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+      "query": "做了一个充满压力的梦",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 11.219356576075757,
+      "note": "梦境及其解析是日记独有事件，全部 37 段日志不涉及任何做梦内容，无同源段。",
+      "hits": [
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 11.219356576075757,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-21.md#3",
+          "line": "14-16",
+          "date": "2026-09-21",
+          "score": 11.17751738277488,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-20.md#1",
+          "line": "1-8",
+          "date": "2026-09-20",
+          "score": 9.064654468850566,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#8",
+          "line": "56-59",
+          "date": "2026-09-25",
+          "score": 8.083591633317486,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#7",
+          "line": "60-69",
+          "date": "2026-09-23",
+          "score": 6.856995567148097,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 5.826789819072454,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 5.3111515960819125,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#3",
+          "line": "32-35",
+          "date": "2026-09-24",
+          "score": 5.16233817084353,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 0
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/困境转化.md",
+      "query": "男主可能遭遇过这样的选择和挣扎，就是产品研发可能有巨大的不确定性，不好说能不能卖出去",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 35.46216135815663,
+      "note": "日记谈隐形劳动对能量的消耗与倾听陪伴服务，日志中没有对应记录，2026-09-27.md#1 等仅同谈边界与压力，属主题相似不算。",
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 35.46216135815663,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 30.754737969894972,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#2",
+          "line": "32-54",
+          "date": "2026-09-26",
+          "score": 30.1868130383134,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#1",
+          "line": "1-30",
+          "date": "2026-09-26",
+          "score": 27.53890654930293,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#4",
+          "line": "22-24",
+          "date": "2026-09-25",
+          "score": 26.890125588591307,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#4",
+          "line": "74-98",
+          "date": "2026-09-26",
+          "score": 26.792711261332933,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#5",
+          "line": "40-46",
+          "date": "2026-09-23",
+          "score": 25.26443198694078,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#2",
+          "line": "8-14",
+          "date": "2026-09-25",
+          "score": 23.47254120644261,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 1
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/失败感.md",
+      "query": "今天听了一个店主说自己挣过钱，然后对现在一个月几万流水觉得不在意",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 23.43892039558828,
+      "note": "日记事件是听店主讲月几万流水后与之对比体量产生的嫉妒与习得性无助，日志无此事件（2026-09-26.md#5 的店主朋友是讨论传播方法的另一件事），2026-09-21.md#3 的战略失败仅情绪词重合。",
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 23.43892039558828,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 23.383962109396204,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#4",
+          "line": "74-98",
+          "date": "2026-09-26",
+          "score": 21.961002420639186,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#2",
+          "line": "12-31",
+          "date": "2026-09-24",
+          "score": 21.599336195986446,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-21.md#1",
+          "line": "1-6",
+          "date": "2026-09-21",
+          "score": 21.194603492256356,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#2",
+          "line": "32-54",
+          "date": "2026-09-26",
+          "score": 20.711368900424766,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#1",
+          "line": "1-30",
+          "date": "2026-09-26",
+          "score": 18.00781028595672,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#3",
+          "line": "16-30",
+          "date": "2026-09-23",
+          "score": 16.798201902375702,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 1
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/观察压力.md",
+      "query": "之所以会在展会这个点卡住，有一部分原因是好久没有去展会缺乏代入感，也有一部分原因是我不敢想也不愿意想，感觉一想就都是新的压力",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 60.5793271577537,
+      "note": "日记事件是展会剧本卡住、朋友反馈与鸭脖阿姨修手机，37 段日志无一处提及展会或这些细节，仅 2026-09-27.md#1 等同谈压力属主题相似，不算同源。",
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-25.md#5",
+          "line": "26-38",
+          "date": "2026-09-25",
+          "score": 60.5793271577537,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#4",
+          "line": "74-98",
+          "date": "2026-09-26",
+          "score": 51.72589078187764,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 45.36821263386827,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#3",
+          "line": "16-30",
+          "date": "2026-09-23",
+          "score": 43.63585500174243,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#1",
+          "line": "1-30",
+          "date": "2026-09-26",
+          "score": 40.558149797092646,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#2",
+          "line": "12-31",
+          "date": "2026-09-24",
+          "score": 40.16467325742986,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 39.19874842757292,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#3",
+          "line": "32-35",
+          "date": "2026-09-24",
+          "score": 37.22896413433274,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 0
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/隐形劳动.md",
+      "query": "隐形劳动是一种昂贵的劳动",
+      "covered": false,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 11.70243793498205,
+      "note": "主体内容（把困境剪成视频素材、产品能否卖出的挣扎）在日志中无来源，仅\"个人与机构账号如何分工\"一点与 2026-09-22.md#1（公司号/个人号边界）、2026-09-25.md#3（个人号与公司公众号维护不动）主题呼应，单段不能认出是底稿，故不给金标。",
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-23.md#3",
+          "line": "16-30",
+          "date": "2026-09-23",
+          "score": 11.70243793498205,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#5",
+          "line": "26-38",
+          "date": "2026-09-25",
+          "score": 7.23906741547074,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#2",
+          "line": "32-54",
+          "date": "2026-09-26",
+          "score": 6.991010164160247,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#2",
+          "line": "8-14",
+          "date": "2026-09-25",
+          "score": 6.3112317231702875,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#4",
+          "line": "74-98",
+          "date": "2026-09-26",
+          "score": 6.07022588267777,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#3",
+          "line": "32-35",
+          "date": "2026-09-24",
+          "score": 5.5115857874387295,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 5.482196688423395,
+          "verdict": null
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 5.462237546933968,
+          "verdict": null
+        }
+      ],
+      "lines": [],
+      "related_top3": 0
+    }
+  ]
+}
