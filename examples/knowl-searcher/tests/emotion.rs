@@ -1,17 +1,18 @@
-//! 第二轮纯函数回归：日志段切分与坐标、首句、出口阈值、聚线、金标解析。
+//! 第二轮纯函数回归：日志段切分与坐标、查询分组、分块、首句、出口阈值、聚线、标注合并。
 //!
 //! 全部用内存夹具，不依赖真实资产目录，也不打网络。
 
 use knowl_searcher::corpus::{Doc, Kind};
+use knowl_searcher::embed::EMBED_CHARS;
 use knowl_searcher::emotion::{
-    LINE_TAU, TAU1, TAU2, TOP3, Verdict, cluster_lines, date_of, first_sentence, parse_gold,
-    parse_related, segments_from_docs, verdict,
+    GROUP_DIARY, LINE_TAU, TAU1, TAU2, TOP3, Verdict, build_queries, cluster_lines, date_of,
+    embed_chunks, first_sentence, merge_related, segments_from_docs, verdict,
 };
 
-fn journal(path: &str, text: &str) -> Doc {
+fn doc(path: &str, kind: Kind, text: &str) -> Doc {
     Doc {
         path: path.to_string(),
-        kind: Kind::Journal,
+        kind,
         text: text.to_string(),
     }
 }
@@ -19,7 +20,11 @@ fn journal(path: &str, text: &str) -> Doc {
 #[test]
 fn segments_split_by_separator_with_coordinates() {
     let text = "第一段。\n\n---\n\n第二段。\n---\n第三段。\n";
-    let docs = vec![journal("memory/default/journal/2026-09-23.md", text)];
+    let docs = vec![doc(
+        "memory/default/journal/2026-09-23.md",
+        Kind::Journal,
+        text,
+    )];
     let segs = segments_from_docs(&docs);
 
     assert_eq!(
@@ -39,10 +44,19 @@ fn segments_split_by_separator_with_coordinates() {
 }
 
 #[test]
-fn segment_ids_are_unique_across_files() {
+fn segment_ids_are_unique_across_sets() {
     let docs = vec![
-        journal("memory/default/journal/2026-09-23.md", "甲。\n---\n乙。\n"),
-        journal("memory/default/2026-09-27.md", "丙。\n"),
+        doc(
+            "memory/default/journal/2026-09-23.md",
+            Kind::Journal,
+            "甲。\n---\n乙。\n",
+        ),
+        doc(
+            "memory/fiction/journal/2026-09-22.md",
+            Kind::Journal,
+            "丙。\n",
+        ),
+        doc("memory/game/2026-09-27.md", Kind::Journal, "丁。\n"),
     ];
     let segs = segments_from_docs(&docs);
     let mut ids: Vec<&str> = segs.iter().map(|s| s.id.as_str()).collect();
@@ -58,9 +72,52 @@ fn date_only_from_real_date_filename() {
         date_of("memory/default/journal/2026-09-23.md"),
         "2026-09-23"
     );
-    assert_eq!(date_of("memory/default/2026-09-27.md"), "2026-09-27");
+    assert_eq!(date_of("memory/game/2026-09-27.md"), "2026-09-27");
     assert_eq!(date_of("memory/default/README.md"), "");
     assert_eq!(date_of("memory/default/2026-9-23.md"), "");
+}
+
+#[test]
+fn queries_take_only_emotion_diaries() {
+    let docs = vec![
+        doc(
+            "fiction/观察站/1_情绪日记/失败感.md",
+            Kind::Emotion,
+            "今天听了一个店主。",
+        ),
+        doc(
+            "fiction/重生言情/1_灵感/命运.md",
+            Kind::Chapter,
+            "命运是什么。",
+        ),
+        doc(
+            "fiction/职场言情/2_场景/3_展会再遇.md",
+            Kind::Chapter,
+            "展会又见面了。",
+        ),
+        doc(
+            "memory/default/journal/2026-09-23.md",
+            Kind::Journal,
+            "随手写的。",
+        ),
+    ];
+    let qs = build_queries(&docs);
+
+    assert_eq!(qs.len(), 1, "本轮只取情绪日记: {qs:?}");
+    assert_eq!(qs[0].path, "fiction/观察站/1_情绪日记/失败感.md");
+    assert_eq!(qs[0].group, GROUP_DIARY);
+}
+
+#[test]
+fn embed_chunks_cover_long_text_without_loss() {
+    let long: String = "很".repeat(1200);
+    let chunks = embed_chunks(&long);
+    assert!(chunks.len() > 1, "超长文本必须分块");
+    let total: usize = chunks.iter().map(|c| c.chars().count()).sum();
+    assert!(total >= 1200, "分块有重叠，字符总量不应少于原文: {total}");
+    assert!(chunks.iter().all(|c| c.chars().count() <= EMBED_CHARS));
+    assert_eq!(embed_chunks("短文本").len(), 1);
+    assert!(embed_chunks("   ").is_empty());
 }
 
 #[test]
@@ -100,43 +157,25 @@ fn lines_chain_by_single_linkage() {
 }
 
 #[test]
-fn gold_file_parses_with_empty_meaning_uncovered() {
-    let raw = r#"{
-        "rule": "同事件或同情绪对象的默认日志段 id；空数组表示无金标",
-        "annotator": "tester",
-        "gold": {
-            "fiction/观察站/1_情绪日记/失败感.md": ["memory/default/journal/2026-09-26.md#5"],
-            "fiction/观察站/1_情绪日记/隐形劳动.md": []
-        }
+fn related_parts_merge_and_reject_conflicts() {
+    let a = r#"{
+        "rule": "能提供提醒价值判相关",
+        "related": {"fiction/a.md": {"m/x.md#1": true}},
+        "notes": {"fiction/a.md": "同事件"}
     }"#;
-    let g = parse_gold(raw).expect("金标可解析");
-    assert!(g.rule.contains("日志段"));
-    assert_eq!(
-        g.gold["fiction/观察站/1_情绪日记/失败感.md"],
-        vec!["memory/default/journal/2026-09-26.md#5"]
-    );
-    assert!(g.gold["fiction/观察站/1_情绪日记/隐形劳动.md"].is_empty());
-    assert!(parse_gold("{不是 json}").is_err());
-}
+    let b = r#"{
+        "related": {"fiction/a.md": {"m/y.md#2": false}, "fiction/b.md": {"m/z.md#1": true}},
+        "notes": {"fiction/b.md": "同场景"}
+    }"#;
+    let set = merge_related(&[a, b]).expect("分片可合并");
+    assert_eq!(set.labels["fiction/a.md"]["m/x.md#1"], true);
+    assert_eq!(set.labels["fiction/a.md"]["m/y.md#2"], false);
+    assert_eq!(set.labels["fiction/b.md"]["m/z.md#1"], true);
+    assert!(set.notes["fiction/a.md"].contains("同事件"));
 
-#[test]
-fn related_labels_are_diagnostic_input() {
-    let raw = r#"{
-        "rule": "诊断口径：能提供提醒价值判相关",
-        "annotator": "tester",
-        "related": {
-            "fiction/观察站/1_情绪日记/失败感.md": {
-                "memory/default/journal/2026-09-26.md#3": true,
-                "memory/default/journal/2026-09-20.md#1": false
-            }
-        },
-        "notes": { "fiction/观察站/1_情绪日记/失败感.md": "同一情绪处境" }
-    }"#;
-    let r = parse_related(raw).expect("相关性标注可解析");
-    let labels = &r.related["fiction/观察站/1_情绪日记/失败感.md"];
-    assert_eq!(labels["memory/default/journal/2026-09-26.md#3"], true);
-    assert_eq!(labels["memory/default/journal/2026-09-20.md#1"], false);
-    assert!(r.notes["fiction/观察站/1_情绪日记/失败感.md"].contains("情绪"));
+    let clash = r#"{"related": {"fiction/a.md": {"m/x.md#1": false}}}"#;
+    assert!(merge_related(&[a, clash]).is_err(), "同键不同值必须报冲突");
+    assert!(merge_related(&["{不是 json}"]).is_err());
 }
 
 #[test]

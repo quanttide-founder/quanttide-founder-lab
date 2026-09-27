@@ -20,12 +20,11 @@ fn manifest(rel: &str) -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(rel)
 }
 
-const USAGE: &str = "用法: knowl-searcher <stats|run|segments|emotion> [--scorer bm25|embed] [--query first|full] [--topk N] [--assets DIR] [--queries FILE] [--gold FILE] [--related FILE] [--out FILE] [--verbose]";
+const USAGE: &str = "用法: knowl-searcher <stats|run|segments|emotion> [--scorer bm25|embed] [--query full|first] [--topk N] [--assets DIR] [--queries FILE] [--related FILE] [--out FILE] [--verbose]";
 
 struct Opts {
     assets: PathBuf,
     queries: PathBuf,
-    gold: PathBuf,
     related: PathBuf,
     out: Option<PathBuf>,
     topk: usize,
@@ -41,12 +40,11 @@ fn main() -> ExitCode {
     let mut opts = Opts {
         assets: manifest("../../../../assets"),
         queries: manifest("data/queries.json"),
-        gold: manifest("data/emotion-gold.json"),
-        related: manifest("data/emotion-related.json"),
+        related: manifest("data/related"),
         out: None,
         topk: 5,
         embed: false,
-        query_mode: "first".to_string(),
+        query_mode: "full".to_string(),
         verbose: false,
     };
 
@@ -65,10 +63,6 @@ fn main() -> ExitCode {
             "--queries" => match need(&mut i) {
                 Some(v) => opts.queries = PathBuf::from(v),
                 None => return usage("--queries 缺值"),
-            },
-            "--gold" => match need(&mut i) {
-                Some(v) => opts.gold = PathBuf::from(v),
-                None => return usage("--gold 缺值"),
             },
             "--related" => match need(&mut i) {
                 Some(v) => opts.related = PathBuf::from(v),
@@ -94,8 +88,8 @@ fn main() -> ExitCode {
                     None => return usage("--query 缺值"),
                 };
                 match v.as_str() {
-                    "first" | "full" => opts.query_mode = v,
-                    other => return usage(&format!("未知查询档 {other}，可选 first | full")),
+                    "full" | "first" => opts.query_mode = v,
+                    other => return usage(&format!("未知查询档 {other}，可选 full | first")),
                 }
             }
             "--verbose" => opts.verbose = true,
@@ -154,7 +148,6 @@ fn segments(opts: &Opts) -> Result<(), Box<dyn std::error::Error>> {
 fn emotion_cmd(opts: &Opts) -> Result<(), Box<dyn std::error::Error>> {
     emotion::run(&emotion::Config {
         assets: opts.assets.clone(),
-        gold: opts.gold.clone(),
         related: opts.related.clone(),
         out: opts
             .out

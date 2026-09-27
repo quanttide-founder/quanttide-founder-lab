@@ -1,0 +1,95 @@
+{
+ "fiction/观察站/1_情绪日记/事业进步.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/fiction/journal/2026-09-10.md#1",
+   "memory/fiction/journal/2026-09-09.md#1",
+   "memory/default/journal/2026-09-26.md#3",
+   "memory/fiction/journal/2026-09-20.md#1",
+   "memory/fiction/journal/2026-09-16.md#1",
+   "memory/fiction/journal/2026-09-05.md#1",
+   "memory/fiction/journal/2026-09-25.md#4",
+   "memory/default/journal/2026-09-22.md#1",
+   "memory/default/journal/2026-09-24.md#2",
+   "memory/fiction/journal/2026-09-06.md#1"
+  ]
+ },
+ "fiction/观察站/1_情绪日记/关于考试的梦.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/fiction/journal/2026-09-25.md#4",
+   "memory/fiction/journal/2026-09-20.md#1",
+   "memory/fiction/journal/2026-09-25.md#2",
+   "memory/fiction/journal/2026-09-06.md#1",
+   "memory/fiction/journal/2026-09-26.md#2",
+   "memory/fiction/journal/2026-09-10.md#1",
+   "memory/fiction/journal/2026-09-16.md#1",
+   "memory/default/journal/2026-09-21.md#1",
+   "memory/default/journal/2026-09-26.md#1",
+   "memory/default/journal/2026-09-26.md#4",
+   "memory/default/journal/2026-09-26.md#3"
+  ]
+ },
+ "fiction/观察站/1_情绪日记/困境转化.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/default/journal/2026-09-26.md#3",
+   "memory/fiction/journal/2026-09-05.md#1",
+   "memory/default/2026-09-27.md#1",
+   "memory/fiction/journal/2026-09-09.md#1",
+   "memory/default/journal/2026-09-22.md#1",
+   "memory/default/journal/2026-09-25.md#6",
+   "memory/fiction/journal/2026-09-26.md#2",
+   "memory/fiction/journal/2026-09-25.md#2",
+   "memory/default/journal/2026-09-26.md#2",
+   "memory/default/journal/2026-09-24.md#2"
+  ]
+ },
+ "fiction/观察站/1_情绪日记/失败感.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/fiction/journal/2026-09-22.md#1",
+   "memory/fiction/journal/2026-09-25.md#4",
+   "memory/fiction/journal/2026-09-20.md#1",
+   "memory/fiction/journal/2026-09-06.md#1",
+   "memory/fiction/journal/2026-09-09.md#1",
+   "memory/fiction/journal/2026-09-25.md#2",
+   "memory/default/journal/2026-09-26.md#3",
+   "memory/fiction/journal/2026-09-10.md#1",
+   "memory/fiction/journal/2026-09-05.md#1",
+   "memory/default/journal/2026-09-22.md#1",
+   "memory/fiction/journal/2026-09-26.md#2"
+  ]
+ },
+ "fiction/观察站/1_情绪日记/观察压力.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/fiction/journal/2026-09-20.md#1",
+   "memory/default/journal/2026-09-26.md#3",
+   "memory/fiction/journal/2026-09-05.md#1",
+   "memory/fiction/journal/2026-09-22.md#1",
+   "memory/fiction/journal/2026-09-09.md#1",
+   "memory/fiction/journal/2026-09-26.md#2",
+   "memory/fiction/journal/2026-09-06.md#1",
+   "memory/default/2026-09-27.md#1",
+   "memory/default/journal/2026-09-26.md#1",
+   "memory/default/journal/2026-09-26.md#2",
+   "memory/default/journal/2026-09-26.md#4"
+  ]
+ },
+ "fiction/观察站/1_情绪日记/隐形劳动.md": {
+  "group": "情绪日记",
+  "ids": [
+   "memory/default/journal/2026-09-26.md#3",
+   "memory/default/2026-09-27.md#1",
+   "memory/default/journal/2026-09-23.md#1",
+   "memory/default/journal/2026-09-25.md#2",
+   "memory/default/journal/2026-09-24.md#2",
+   "memory/default/journal/2026-09-23.md#4",
+   "memory/default/journal/2026-09-26.md#1",
+   "memory/default/journal/2026-09-26.md#2",
+   "memory/default/journal/2026-09-26.md#4",
+   "memory/default/journal/2026-09-22.md#1"
+  ]
+ }
+}

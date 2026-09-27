@@ -1,0 +1,478 @@
+{
+  "scorer": "embed",
+  "query_mode": "full",
+  "segments": 51,
+  "queries": 6,
+  "labeled": 6,
+  "p_at_3": 0.2777777777777778,
+  "hit_at_3_rate": 0.6666666666666666,
+  "groups": [
+    {
+      "group": "情绪日记",
+      "queries": 6,
+      "labeled": 6,
+      "p_at_3": 0.2777777777777778,
+      "hit_at_3_rate": 0.6666666666666666
+    }
+  ],
+  "random_baseline": 0.058823529411764705,
+  "self_retrieval_top3": 0.9411764705882353,
+  "top1_scores": [
+    0.4924653195860167,
+    0.5459030722470221,
+    0.5437267537455006,
+    0.5363437896636654,
+    0.6337448168759531,
+    0.477902757348618
+  ],
+  "tau2_hits": 0,
+  "tau1_drops": 40,
+  "rules_applied": true,
+  "rule": {
+    "tau1": 0.55,
+    "tau2": 0.92,
+    "line_tau": 0.7,
+    "retrieve_k": 8,
+    "top3": 3
+  },
+  "outcomes": [
+    {
+      "file": "fiction/观察站/1_情绪日记/事业进步.md",
+      "group": "情绪日记",
+      "query": "今天想写的是成功拿下订单的过程。想写一个商业化思路成熟的过程。\n\n想要写的感觉是“满级大号屠杀新手村”。来源于全职高手叶修的人设。\n\n",
+      "labeled": true,
+      "rank": null,
+      "hit_at_3": false,
+      "top1_score": 0.4924653195860167,
+      "note": "十条候选没有任何与'拿下订单/商业化成功'同事实的段落，最接近的 09-22 也只是日常发布与划边界，按仅同题判全 false。",
+      "related_ids": [],
+      "hits": [
+        {
+          "id": "memory/fiction/journal/2026-09-10.md#1",
+          "line": "1-9",
+          "date": "2026-09-10",
+          "score": 0.4924653195860167,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-09.md#1",
+          "line": "1-11",
+          "date": "2026-09-09",
+          "score": 0.49123669394327046,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 0.47664576029921835,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-20.md#1",
+          "line": "1-6",
+          "date": "2026-09-20",
+          "score": 0.4747899492753639,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-16.md#1",
+          "line": "1-7",
+          "date": "2026-09-16",
+          "score": 0.47301194428836274,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-05.md#1",
+          "line": "1-25",
+          "date": "2026-09-05",
+          "score": 0.4715904043051888,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#4",
+          "line": "24-31",
+          "date": "2026-09-25",
+          "score": 0.46303991263161526,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 0.45816631275445296,
+          "verdict": "below_floor"
+        }
+      ],
+      "lines": []
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+      "group": "情绪日记",
+      "query": "做了一个充满压力的梦。\n\n梦见自己回到了大学或者高考，考卷怎么也做不完，拼命做也做不完。\n\n睡醒以后想到了初中有考试卷子没做完的经历。\n\n梦见考六门，但是数学有…",
+      "labeled": true,
+      "rank": 8,
+      "hit_at_3": false,
+      "top1_score": 0.5459030722470221,
+      "note": "把握较大，两条 true 分别对应'醒来千头万绪的压力现场'和'怕无底洞/怕开天坑的隐藏风险'，其余是写作流水与工具记录。",
+      "related_ids": [
+        "memory/default/journal/2026-09-21.md#1"
+      ],
+      "hits": [
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#4",
+          "line": "24-31",
+          "date": "2026-09-25",
+          "score": 0.5459030722470221,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-20.md#1",
+          "line": "1-6",
+          "date": "2026-09-20",
+          "score": 0.5341230126637708,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#2",
+          "line": "8-18",
+          "date": "2026-09-25",
+          "score": 0.5029285689541474,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-06.md#1",
+          "line": "1-11",
+          "date": "2026-09-06",
+          "score": 0.49890840858671354,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-26.md#2",
+          "line": "10-17",
+          "date": "2026-09-26",
+          "score": 0.49623018624557136,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-10.md#1",
+          "line": "1-9",
+          "date": "2026-09-10",
+          "score": 0.4792065801216902,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-16.md#1",
+          "line": "1-7",
+          "date": "2026-09-16",
+          "score": 0.4770719179751778,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-21.md#1",
+          "line": "1-6",
+          "date": "2026-09-21",
+          "score": 0.4756748083857254,
+          "verdict": "below_floor"
+        }
+      ],
+      "lines": []
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/困境转化.md",
+      "group": "情绪日记",
+      "query": "男主可能遭遇过这样的选择和挣扎，就是产品研发可能有巨大的不确定性，不好说能不能卖出去。\n\n把困境变成素材。男主开始剪辑自己的失败经历，把各种槽点剪辑出来当成素材…",
+      "labeled": true,
+      "rank": 1,
+      "hit_at_3": true,
+      "top1_score": 0.5437267537455006,
+      "note": "09-26#3 直接命中'产品不确定、怕继续亏'最有把握，09-22、09-26#2 命中'个人运营怎么交给团队/组织'，其余只沾困境或边界的泛主题。",
+      "related_ids": [
+        "memory/default/journal/2026-09-26.md#3",
+        "memory/default/journal/2026-09-22.md#1"
+      ],
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 0.5437267537455006,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-05.md#1",
+          "line": "1-25",
+          "date": "2026-09-05",
+          "score": 0.4972278088468398,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 0.4916687205891507,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-09.md#1",
+          "line": "1-11",
+          "date": "2026-09-09",
+          "score": 0.488558886762715,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-22.md#1",
+          "line": "1-29",
+          "date": "2026-09-22",
+          "score": 0.48388166339266303,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#6",
+          "line": "40-50",
+          "date": "2026-09-25",
+          "score": 0.48296643315522564,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-26.md#2",
+          "line": "10-17",
+          "date": "2026-09-26",
+          "score": 0.4807455139671416,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#2",
+          "line": "8-18",
+          "date": "2026-09-25",
+          "score": 0.47967335417960194,
+          "verdict": "below_floor"
+        }
+      ],
+      "lines": []
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/失败感.md",
+      "group": "情绪日记",
+      "query": "今天听了一个店主说自己挣过钱，然后对现在一个月几万流水觉得不在意。\n\n对比自己的体量，发现自己好像连一个小店都不如。\n\n但是好在资产轻成本低。又慢慢调整过来自己…",
+      "labeled": true,
+      "rank": 2,
+      "hit_at_3": true,
+      "top1_score": 0.5363437896636654,
+      "note": "两条 true 一个是'把现实挫折感结合进男主'的既有创作决定，一个是'自我怀疑后盘账站住'，其余没有体量对比与嫉妒的具体事实。",
+      "related_ids": [
+        "memory/fiction/journal/2026-09-25.md#4",
+        "memory/default/journal/2026-09-26.md#3"
+      ],
+      "hits": [
+        {
+          "id": "memory/fiction/journal/2026-09-22.md#1",
+          "line": "1-9",
+          "date": "2026-09-22",
+          "score": 0.5363437896636654,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#4",
+          "line": "24-31",
+          "date": "2026-09-25",
+          "score": 0.5168273817133923,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-20.md#1",
+          "line": "1-6",
+          "date": "2026-09-20",
+          "score": 0.5123943320292914,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-06.md#1",
+          "line": "1-11",
+          "date": "2026-09-06",
+          "score": 0.5035802501422515,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-09.md#1",
+          "line": "1-11",
+          "date": "2026-09-09",
+          "score": 0.4903928592308334,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-25.md#2",
+          "line": "8-18",
+          "date": "2026-09-25",
+          "score": 0.4889968905101205,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 0.4787261555983999,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-10.md#1",
+          "line": "1-9",
+          "date": "2026-09-10",
+          "score": 0.4693907665708431,
+          "verdict": "below_floor"
+        }
+      ],
+      "lines": []
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/观察压力.md",
+      "group": "情绪日记",
+      "query": "之所以会在展会这个点卡住，有一部分原因是好久没有去展会缺乏代入感，也有一部分原因是我不敢想也不愿意想，感觉一想就都是新的压力。\n\n这种感觉很奇怪。不知道是不是现…",
+      "labeled": true,
+      "rank": 1,
+      "hit_at_3": true,
+      "top1_score": 0.6337448168759531,
+      "note": "两条 true 对应'重新接触市场'与'写出来/说出来就平静'两处具体现场，其余只在压力或写作方法层面同题。",
+      "related_ids": [
+        "memory/fiction/journal/2026-09-20.md#1",
+        "memory/default/journal/2026-09-26.md#3"
+      ],
+      "hits": [
+        {
+          "id": "memory/fiction/journal/2026-09-20.md#1",
+          "line": "1-6",
+          "date": "2026-09-20",
+          "score": 0.6337448168759531,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 0.6195130295864262,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-05.md#1",
+          "line": "1-25",
+          "date": "2026-09-05",
+          "score": 0.6186848260036666,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-22.md#1",
+          "line": "1-9",
+          "date": "2026-09-22",
+          "score": 0.5929204739941695,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-09.md#1",
+          "line": "1-11",
+          "date": "2026-09-09",
+          "score": 0.5905787980702751,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-26.md#2",
+          "line": "10-17",
+          "date": "2026-09-26",
+          "score": 0.5889732096187885,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/fiction/journal/2026-09-06.md#1",
+          "line": "1-11",
+          "date": "2026-09-06",
+          "score": 0.5826287097315206,
+          "verdict": "remind"
+        },
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 0.5780690245774824,
+          "verdict": "remind"
+        }
+      ],
+      "lines": [
+        [
+          "memory/fiction/journal/2026-09-20.md#1",
+          "memory/fiction/journal/2026-09-26.md#2"
+        ]
+      ]
+    },
+    {
+      "file": "fiction/观察站/1_情绪日记/隐形劳动.md",
+      "group": "情绪日记",
+      "query": "隐形劳动是一种昂贵的劳动。\n\n即使是我的情绪保持边界不被冲击，我的能量依然在应对不确定的情况下消耗。\n\n且这种早期业务形态的不确定性是非常消耗人的。\n\n持续处在…",
+      "labeled": true,
+      "rank": 3,
+      "hit_at_3": true,
+      "top1_score": 0.477902757348618,
+      "note": "只有 09-23#1 直接谈'不赚钱的劳动如何切分与补偿（带实习生收益低、非商业化承载失败）'，其余或谈合规、或谈提效，同题不同事。",
+      "related_ids": [
+        "memory/default/journal/2026-09-23.md#1"
+      ],
+      "hits": [
+        {
+          "id": "memory/default/journal/2026-09-26.md#3",
+          "line": "56-72",
+          "date": "2026-09-26",
+          "score": 0.477902757348618,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/2026-09-27.md#1",
+          "line": "1-20",
+          "date": "2026-09-27",
+          "score": 0.47587526072626174,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#1",
+          "line": "1-8",
+          "date": "2026-09-23",
+          "score": 0.4739943144924494,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-25.md#2",
+          "line": "8-14",
+          "date": "2026-09-25",
+          "score": 0.46281782195998367,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-24.md#2",
+          "line": "12-31",
+          "date": "2026-09-24",
+          "score": 0.4588669576671042,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-23.md#4",
+          "line": "32-38",
+          "date": "2026-09-23",
+          "score": 0.45754344470736036,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#1",
+          "line": "1-30",
+          "date": "2026-09-26",
+          "score": 0.44351368926889145,
+          "verdict": "below_floor"
+        },
+        {
+          "id": "memory/default/journal/2026-09-26.md#2",
+          "line": "32-54",
+          "date": "2026-09-26",
+          "score": 0.43968495113409994,
+          "verdict": "below_floor"
+        }
+      ],
+      "lines": []
+    }
+  ]
+}

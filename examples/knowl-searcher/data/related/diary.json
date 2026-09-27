@@ -1,0 +1,90 @@
+{
+  "rule": "能提供提醒价值判相关：同经历/同事实/同场景细节/可接话的具体内容；仅词汇或泛泛同主题判 false。",
+  "annotator": "MiMo（AI 助手），单人标注",
+  "date": "2026-09-27",
+  "related": {
+    "fiction/观察站/1_情绪日记/事业进步.md": {
+      "memory/fiction/journal/2026-09-10.md#1": false,
+      "memory/fiction/journal/2026-09-09.md#1": false,
+      "memory/default/journal/2026-09-26.md#3": false,
+      "memory/fiction/journal/2026-09-20.md#1": false,
+      "memory/fiction/journal/2026-09-16.md#1": false,
+      "memory/fiction/journal/2026-09-05.md#1": false,
+      "memory/fiction/journal/2026-09-25.md#4": false,
+      "memory/default/journal/2026-09-22.md#1": false,
+      "memory/default/journal/2026-09-24.md#2": false,
+      "memory/fiction/journal/2026-09-06.md#1": false
+    },
+    "fiction/观察站/1_情绪日记/关于考试的梦.md": {
+      "memory/fiction/journal/2026-09-25.md#4": false,
+      "memory/fiction/journal/2026-09-20.md#1": false,
+      "memory/fiction/journal/2026-09-25.md#2": false,
+      "memory/fiction/journal/2026-09-06.md#1": false,
+      "memory/fiction/journal/2026-09-26.md#2": false,
+      "memory/fiction/journal/2026-09-10.md#1": false,
+      "memory/fiction/journal/2026-09-16.md#1": false,
+      "memory/default/journal/2026-09-21.md#1": true,
+      "memory/default/journal/2026-09-26.md#1": false,
+      "memory/default/journal/2026-09-26.md#4": false,
+      "memory/default/journal/2026-09-26.md#3": true
+    },
+    "fiction/观察站/1_情绪日记/困境转化.md": {
+      "memory/default/journal/2026-09-26.md#3": true,
+      "memory/fiction/journal/2026-09-05.md#1": false,
+      "memory/default/2026-09-27.md#1": false,
+      "memory/fiction/journal/2026-09-09.md#1": false,
+      "memory/default/journal/2026-09-22.md#1": true,
+      "memory/default/journal/2026-09-25.md#6": false,
+      "memory/fiction/journal/2026-09-26.md#2": false,
+      "memory/fiction/journal/2026-09-25.md#2": false,
+      "memory/default/journal/2026-09-26.md#2": true,
+      "memory/default/journal/2026-09-24.md#2": false
+    },
+    "fiction/观察站/1_情绪日记/失败感.md": {
+      "memory/fiction/journal/2026-09-22.md#1": false,
+      "memory/fiction/journal/2026-09-25.md#4": true,
+      "memory/fiction/journal/2026-09-20.md#1": false,
+      "memory/fiction/journal/2026-09-06.md#1": false,
+      "memory/fiction/journal/2026-09-09.md#1": false,
+      "memory/fiction/journal/2026-09-25.md#2": false,
+      "memory/default/journal/2026-09-26.md#3": true,
+      "memory/fiction/journal/2026-09-10.md#1": false,
+      "memory/fiction/journal/2026-09-05.md#1": false,
+      "memory/default/journal/2026-09-22.md#1": false,
+      "memory/fiction/journal/2026-09-26.md#2": false
+    },
+    "fiction/观察站/1_情绪日记/观察压力.md": {
+      "memory/fiction/journal/2026-09-20.md#1": true,
+      "memory/default/journal/2026-09-26.md#3": true,
+      "memory/fiction/journal/2026-09-05.md#1": false,
+      "memory/fiction/journal/2026-09-22.md#1": false,
+      "memory/fiction/journal/2026-09-09.md#1": false,
+      "memory/fiction/journal/2026-09-26.md#2": false,
+      "memory/fiction/journal/2026-09-06.md#1": false,
+      "memory/default/2026-09-27.md#1": false,
+      "memory/default/journal/2026-09-26.md#1": false,
+      "memory/default/journal/2026-09-26.md#2": false,
+      "memory/default/journal/2026-09-26.md#4": false
+    },
+    "fiction/观察站/1_情绪日记/隐形劳动.md": {
+      "memory/default/journal/2026-09-26.md#3": false,
+      "memory/default/2026-09-27.md#1": false,
+      "memory/default/journal/2026-09-23.md#1": true,
+      "memory/default/journal/2026-09-25.md#2": false,
+      "memory/default/journal/2026-09-24.md#2": false,
+      "memory/default/journal/2026-09-23.md#4": false,
+      "memory/default/journal/2026-09-26.md#1": false,
+      "memory/default/journal/2026-09-26.md#2": false,
+      "memory/default/journal/2026-09-26.md#4": false,
+      "memory/default/journal/2026-09-22.md#1": false
+    }
+  },
+  "notes": {
+    "fiction/观察站/1_情绪日记/事业进步.md": "十条候选没有任何与'拿下订单/商业化成功'同事实的段落，最接近的 09-22 也只是日常发布与划边界，按仅同题判全 false。",
+    "fiction/观察站/1_情绪日记/关于考试的梦.md": "把握较大，两条 true 分别对应'醒来千头万绪的压力现场'和'怕无底洞/怕开天坑的隐藏风险'，其余是写作流水与工具记录。",
+    "fiction/观察站/1_情绪日记/困境转化.md": "09-26#3 直接命中'产品不确定、怕继续亏'最有把握，09-22、09-26#2 命中'个人运营怎么交给团队/组织'，其余只沾困境或边界的泛主题。",
+    "fiction/观察站/1_情绪日记/失败感.md": "两条 true 一个是'把现实挫折感结合进男主'的既有创作决定，一个是'自我怀疑后盘账站住'，其余没有体量对比与嫉妒的具体事实。",
+    "fiction/观察站/1_情绪日记/观察压力.md": "两条 true 对应'重新接触市场'与'写出来/说出来就平静'两处具体现场，其余只在压力或写作方法层面同题。",
+    "fiction/观察站/1_情绪日记/隐形劳动.md": "只有 09-23#1 直接谈'不赚钱的劳动如何切分与补偿（带实习生收益低、非商业化承载失败）'，其余或谈合规、或谈提效，同题不同事。"
+  }
+}
