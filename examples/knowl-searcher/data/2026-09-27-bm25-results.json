@@ -1,0 +1,1892 @@
+{
+  "scorer": "bm25",
+  "topk": 5,
+  "query_count": 14,
+  "corpus": {
+    "docs": 131,
+    "units": 406,
+    "chunks": 499,
+    "kinds": [
+      [
+        "chapter",
+        78
+      ],
+      [
+        "emotion",
+        6
+      ],
+      [
+        "insight",
+        5
+      ],
+      [
+        "journal",
+        20
+      ],
+      [
+        "novel_meta",
+        6
+      ],
+      [
+        "profile",
+        10
+      ],
+      [
+        "roadmap",
+        6
+      ]
+    ]
+  },
+  "summaries": [
+    {
+      "arm": "rag-bm25",
+      "hit_at_k": 1.0,
+      "recall_at_k": 0.9166666666666666,
+      "mrr": 0.9642857142857143,
+      "model_coord": 0.0,
+      "stability": 0.3151785714285714
+    },
+    {
+      "arm": "idx-bm25",
+      "hit_at_k": 1.0,
+      "recall_at_k": 0.9166666666666666,
+      "mrr": 0.8928571428571429,
+      "model_coord": 1.0,
+      "stability": 0.36259920634920634
+    },
+    {
+      "arm": "idx-rule-bm25",
+      "hit_at_k": 1.0,
+      "recall_at_k": 0.8809523809523808,
+      "mrr": 0.9047619047619048,
+      "model_coord": 1.0,
+      "stability": 0.3301587301587302
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "q01",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/ai.md",
+          "label": "chunk#0",
+          "score": 48.715990071250125,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "chunk#1",
+          "score": 36.08560677539775,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "chunk#2",
+          "score": 26.023410657954315,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "chunk#1",
+          "score": 25.88431970086576,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/roadmap/重生言情.md",
+          "label": "chunk#3",
+          "score": 23.32024944549348,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/insight/ai.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.25
+    },
+    {
+      "id": "q02",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/profile/methods.md",
+          "label": "chunk#0",
+          "score": 46.61463433750368,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "chunk#1",
+          "score": 46.04588678769125,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "chunk#1",
+          "score": 42.49721407726546,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "chunk#0",
+          "score": 40.35166947911291,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "chunk#3",
+          "score": 33.95539246367097,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/profile/methods.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.6
+    },
+    {
+      "id": "q03",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/隐形劳动.md",
+          "label": "chunk#0",
+          "score": 89.972520797786,
+          "coord": ""
+        },
+        {
+          "path": "memory/game/profile/design.md",
+          "label": "chunk#0",
+          "score": 36.03359763316202,
+          "coord": ""
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "chunk#5",
+          "score": 28.94822694349574,
+          "coord": ""
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "chunk#4",
+          "score": 26.35001904842484,
+          "coord": ""
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/困境转化.md",
+          "label": "chunk#0",
+          "score": 25.223399301991105,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/隐形劳动.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 0.5,
+      "rr": 1.0,
+      "stability": 0.2857142857142857
+    },
+    {
+      "id": "q04",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "chunk#0",
+          "score": 36.59150057246405,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/2_雨夜未眠.md",
+          "label": "chunk#0",
+          "score": 33.923722901556744,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/12_包子店吃早餐.md",
+          "label": "chunk#3",
+          "score": 23.127538221852717,
+          "coord": ""
+        },
+        {
+          "path": "fiction/重生言情/4_成稿/2_重逢.md",
+          "label": "chunk#3",
+          "score": 21.72393847656665,
+          "coord": ""
+        },
+        {
+          "path": "fiction/重生言情/4_成稿/5_上线.md",
+          "label": "chunk#2",
+          "score": 20.638320324844056,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.125
+    },
+    {
+      "id": "q05",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/business.md",
+          "label": "chunk#0",
+          "score": 48.002758603669754,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "chunk#0",
+          "score": 27.809093594113932,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/roadmap/platform.md",
+          "label": "chunk#1",
+          "score": 25.101465976184127,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/values.md",
+          "label": "chunk#1",
+          "score": 24.514273449417278,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "chunk#0",
+          "score": 21.234657576692108,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/insight/business.md",
+        "memory/default/journal/2026-09-26.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q06",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "chunk#0",
+          "score": 23.606343166126056,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "chunk#16",
+          "score": 23.30599375910285,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "chunk#1",
+          "score": 21.898620724879763,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "chunk#1",
+          "score": 21.824327479470238,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/2_场景/3_展会再遇.md",
+          "label": "chunk#0",
+          "score": 17.624891436251794,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/outline.md",
+        "fiction/职场言情/2_场景/3_展会再遇.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q07",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/失败感.md",
+          "label": "chunk#0",
+          "score": 56.40380578712849,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/profile/2_创作方法.md",
+          "label": "chunk#0",
+          "score": 37.61962375677579,
+          "coord": ""
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/困境转化.md",
+          "label": "chunk#0",
+          "score": 36.46517617878003,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "chunk#16",
+          "score": 29.544224494914523,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/expressions.md",
+          "label": "chunk#0",
+          "score": 26.92470301575908,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/失败感.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q08",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "chunk#0",
+          "score": 23.25350636913581,
+          "coord": ""
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "chunk#1",
+          "score": 22.622247095877242,
+          "coord": ""
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "chunk#2",
+          "score": 18.832829251596625,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "chunk#10",
+          "score": 12.183493472590854,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/index.md",
+          "label": "chunk#1",
+          "score": 10.97920603111741,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/关于考试的梦.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q09",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/重生言情/4_成稿/5_上线.md",
+          "label": "chunk#1",
+          "score": 22.574075677681666,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "chunk#1",
+          "score": 21.922236313079072,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "chunk#7",
+          "score": 19.21154147531447,
+          "coord": ""
+        },
+        {
+          "path": "memory/game/profile/method.md",
+          "label": "chunk#0",
+          "score": 19.032461560670363,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "chunk#4",
+          "score": 18.38366659657214,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/business.md",
+        "memory/default/roadmap/creative.md",
+        "memory/default/roadmap/platform.md"
+      ],
+      "hit": true,
+      "recall": 0.3333333333333333,
+      "rr": 0.5,
+      "stability": null
+    },
+    {
+      "id": "q10",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/creative.md",
+          "label": "chunk#0",
+          "score": 50.87764725174462,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "chunk#1",
+          "score": 47.40731300463658,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "chunk#0",
+          "score": 29.526635686753977,
+          "coord": ""
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "chunk#2",
+          "score": 28.392715760981883,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/profile/2_创作方法.md",
+          "label": "chunk#4",
+          "score": 27.69782360715535,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/insight/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q11",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "chunk#0",
+          "score": 33.362223928360194,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "chunk#0",
+          "score": 32.6204649696489,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-21.md",
+          "label": "chunk#0",
+          "score": 22.270303231912454,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/2_场景/6_分享火烧云.md",
+          "label": "chunk#0",
+          "score": 19.149567726076047,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/8_第八章.md",
+          "label": "chunk#3",
+          "score": 15.674016053726172,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/profile/triggers.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q12",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "chunk#0",
+          "score": 43.36643253644007,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "chunk#2",
+          "score": 24.42146589958095,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/profile/3_创作困境.md",
+          "label": "chunk#0",
+          "score": 20.09617696407342,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/insight/platform.md",
+          "label": "chunk#0",
+          "score": 17.009392142952695,
+          "coord": ""
+        },
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "chunk#0",
+          "score": 15.849611317534592,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/decision.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q13",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "chunk#0",
+          "score": 74.03672104764128,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/values.md",
+          "label": "chunk#1",
+          "score": 24.972902220207402,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/roadmap/platform.md",
+          "label": "chunk#1",
+          "score": 23.411161655137608,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/insight/business.md",
+          "label": "chunk#0",
+          "score": 23.286841075500696,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "chunk#0",
+          "score": 22.85383491013455,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q14",
+      "arm": "rag-bm25",
+      "hits": [
+        {
+          "path": "memory/default/roadmap/creative.md",
+          "label": "chunk#0",
+          "score": 32.738890713204995,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "chunk#0",
+          "score": 26.97319876832729,
+          "coord": ""
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "chunk#41",
+          "score": 18.684272611284904,
+          "coord": ""
+        },
+        {
+          "path": "memory/fiction/profile/2_创作方法.md",
+          "label": "chunk#3",
+          "score": 18.63622076304162,
+          "coord": ""
+        },
+        {
+          "path": "memory/default/profile/methods.md",
+          "label": "chunk#2",
+          "score": 18.429690259102156,
+          "coord": ""
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q01",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/ai.md",
+          "label": "假说",
+          "score": 58.84442768773672,
+          "coord": "insight:8-12"
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "自己不想看自己写的内容",
+          "score": 43.55806117976714,
+          "coord": "profile:31-34"
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "疏离",
+          "score": 25.613928391777574,
+          "coord": "profile:17-20"
+        },
+        {
+          "path": "memory/fiction/roadmap/重生言情.md",
+          "label": "为什么是重生",
+          "score": 24.745643916528426,
+          "coord": "roadmap:25-34"
+        },
+        {
+          "path": "memory/default/journal/2026-09-22.md",
+          "label": "2026-09-22（段1）",
+          "score": 24.035447326530978,
+          "coord": "journal:1-29"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/ai.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.3392857142857143
+    },
+    {
+      "id": "q02",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "规模焦虑",
+          "score": 57.145703048317316,
+          "coord": "profile:21-26"
+        },
+        {
+          "path": "memory/default/profile/methods.md",
+          "label": "缩小窗口",
+          "score": 55.038132459798234,
+          "coord": "profile:7-10"
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "范围失控",
+          "score": 50.57257184431556,
+          "coord": "profile:23-26"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24（段1）",
+          "score": 45.67909045070596,
+          "coord": "journal:12-31"
+        },
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "已决策",
+          "score": 35.899984230818525,
+          "coord": "roadmap:17-23"
+        }
+      ],
+      "gold": [
+        "memory/default/profile/methods.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 0.5,
+      "stability": 0.6666666666666666
+    },
+    {
+      "id": "q03",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/隐形劳动.md",
+          "label": "隐形劳动",
+          "score": 91.91396359233705,
+          "coord": "emotion:1-19"
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 30.04868867134675,
+          "coord": "journal:46-51"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/困境转化.md",
+          "label": "困境转化",
+          "score": 28.808285352510904,
+          "coord": "emotion:1-11"
+        },
+        {
+          "path": "memory/game/profile/design.md",
+          "label": "严肃游戏：模拟真实经营",
+          "score": 28.30308453564852,
+          "coord": "profile:5-8"
+        },
+        {
+          "path": "memory/game/profile/design.md",
+          "label": "验收：玩法要有决策与结果的分离",
+          "score": 27.074376880155043,
+          "coord": "profile:9-12"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/隐形劳动.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 0.5,
+      "rr": 1.0,
+      "stability": 0.3333333333333333
+    },
+    {
+      "id": "q04",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "男主线：林远亭的公司",
+          "score": 39.511933925386906,
+          "coord": "novel_meta:9-15"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/2_雨夜未眠.md",
+          "label": "正文（段1）",
+          "score": 30.54032771728429,
+          "coord": "chapter:6-86"
+        },
+        {
+          "path": "fiction/重生言情/4_成稿/4_专访.md",
+          "label": "4_专访（段1）",
+          "score": 28.55962658982837,
+          "coord": "chapter:1-105"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/12_包子店吃早餐.md",
+          "label": "包子店吃早餐（段2）",
+          "score": 26.9094552005013,
+          "coord": "chapter:75-133"
+        },
+        {
+          "path": "fiction/职场言情/3_初稿/制做游戏.md",
+          "label": "制做游戏",
+          "score": 26.308343688950213,
+          "coord": "chapter:1-37"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.1111111111111111
+    },
+    {
+      "id": "q05",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/business.md",
+          "label": "假说",
+          "score": 55.486746872983666,
+          "coord": "insight:7-11"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 30.83678718269411,
+          "coord": "journal:1-30"
+        },
+        {
+          "path": "memory/default/roadmap/platform.md",
+          "label": "待决策",
+          "score": 29.18901946247458,
+          "coord": "roadmap:21-26"
+        },
+        {
+          "path": "memory/default/profile/values.md",
+          "label": "积累感",
+          "score": 25.276952425016916,
+          "coord": "profile:29-32"
+        },
+        {
+          "path": "memory/default/journal/2026-09-23.md",
+          "label": "2026-09-23",
+          "score": 22.108374191201314,
+          "coord": "journal:1-8"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/business.md",
+        "memory/default/journal/2026-09-26.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q06",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "第 3 章《展会再遇》：基调落地——已定调",
+          "score": 29.075370032593845,
+          "coord": "novel_meta:23-26"
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "第一幕 重逢（1-5）",
+          "score": 20.41646846932223,
+          "coord": "novel_meta:5-16"
+        },
+        {
+          "path": "fiction/职场言情/2_场景/4_圆桌辩论.md",
+          "label": "4_圆桌辩论（段1）",
+          "score": 19.114310835310114,
+          "coord": "chapter:1-29"
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "时间轴",
+          "score": 18.96534940774312,
+          "coord": "novel_meta:98-135"
+        },
+        {
+          "path": "fiction/职场言情/2_场景/3_展会再遇.md",
+          "label": "3_展会再遇",
+          "score": 18.865918470571422,
+          "coord": "chapter:1-5"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/outline.md",
+        "fiction/职场言情/2_场景/3_展会再遇.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 0.5,
+      "stability": null
+    },
+    {
+      "id": "q07",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/失败感.md",
+          "label": "失败感",
+          "score": 56.83775780812971,
+          "coord": "emotion:1-23"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/困境转化.md",
+          "label": "困境转化",
+          "score": 38.51717011817813,
+          "coord": "emotion:1-11"
+        },
+        {
+          "path": "memory/fiction/profile/2_创作方法.md",
+          "label": "以情绪为单位的素材",
+          "score": 34.616816445417136,
+          "coord": "profile:7-10"
+        },
+        {
+          "path": "memory/fiction/insight/高跟鞋.md",
+          "label": "高跟鞋（段2）",
+          "score": 23.32368566806596,
+          "coord": "insight:27-35"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段7）",
+          "score": 22.76626801745552,
+          "coord": "chapter:63-83"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/失败感.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q08",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "关于考试的梦",
+          "score": 25.514294273670913,
+          "coord": "emotion:1-16"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "关于考试的梦",
+          "score": 24.475910754007458,
+          "coord": "emotion:18-30"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段5）",
+          "score": 14.768915430829765,
+          "coord": "chapter:48-52"
+        },
+        {
+          "path": "fiction/重生言情/4_成稿/4_专访.md",
+          "label": "4_专访（段1）",
+          "score": 10.755296494547062,
+          "coord": "chapter:1-105"
+        },
+        {
+          "path": "memory/default/journal/2026-09-23.md",
+          "label": "2026-09-23",
+          "score": 10.686129403792952,
+          "coord": "journal:32-38"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/关于考试的梦.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q09",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "待决策",
+          "score": 26.084855262431148,
+          "coord": "roadmap:24-28"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 21.040628707066077,
+          "coord": "journal:32-54"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段2）",
+          "score": 19.9822019093528,
+          "coord": "chapter:22-33"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26（段1）",
+          "score": 19.583229081715317,
+          "coord": "journal:74-98"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-05.md",
+          "label": "2026-09-05",
+          "score": 19.496652711504105,
+          "coord": "journal:1-25"
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/business.md",
+        "memory/default/roadmap/creative.md",
+        "memory/default/roadmap/platform.md"
+      ],
+      "hit": true,
+      "recall": 0.3333333333333333,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q10",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 58.47063802714667,
+          "coord": "journal:22-24"
+        },
+        {
+          "path": "memory/default/insight/creative.md",
+          "label": "已确认",
+          "score": 54.43233348216768,
+          "coord": "insight:3-6"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 29.376286169589317,
+          "coord": "journal:10-17"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/观察压力.md",
+          "label": "观察压力",
+          "score": 28.423320412211957,
+          "coord": "emotion:1-33"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段6）",
+          "score": 24.200670112436544,
+          "coord": "chapter:53-62"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 0.5,
+      "stability": null
+    },
+    {
+      "id": "q11",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "睡醒时的千头万绪",
+          "score": 44.91348037652033,
+          "coord": "profile:7-10"
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "高压与喘息",
+          "score": 43.23967441419752,
+          "coord": "profile:5-10"
+        },
+        {
+          "path": "memory/default/journal/2026-09-21.md",
+          "label": "2026-09-21",
+          "score": 28.01211312986836,
+          "coord": "journal:1-6"
+        },
+        {
+          "path": "fiction/职场言情/2_场景/6_分享火烧云.md",
+          "label": "6_分享火烧云",
+          "score": 21.121067978753366,
+          "coord": "chapter:1-26"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/6_互相问早.md",
+          "label": "互相问早（段1）",
+          "score": 16.71992191108238,
+          "coord": "chapter:1-57"
+        }
+      ],
+      "gold": [
+        "memory/default/profile/triggers.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q12",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "decision",
+          "score": 42.81454523388009,
+          "coord": "novel_meta:1-4"
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "情感阶梯表（覆盖 13–26）——思考中",
+          "score": 36.86784835555086,
+          "coord": "novel_meta:7-12"
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "第 5→8 章：情绪衔接",
+          "score": 28.135614902119567,
+          "coord": "novel_meta:35-38"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 18.20002747618252,
+          "coord": "journal:1-10"
+        },
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "时代背景",
+          "score": 17.22234360612062,
+          "coord": "novel_meta:3-8"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/decision.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q13",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "男主线：林远亭的公司",
+          "score": 74.88386160790722,
+          "coord": "novel_meta:9-15"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 26.113436260961326,
+          "coord": "journal:1-30"
+        },
+        {
+          "path": "memory/default/profile/values.md",
+          "label": "积累感",
+          "score": 21.981675067181342,
+          "coord": "profile:29-32"
+        },
+        {
+          "path": "memory/default/insight/business.md",
+          "label": "假说",
+          "score": 20.698584983265086,
+          "coord": "insight:7-11"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 20.49440406365103,
+          "coord": "journal:57-64"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q14",
+      "arm": "idx-bm25",
+      "hits": [
+        {
+          "path": "memory/default/roadmap/creative.md",
+          "label": "元目标",
+          "score": 32.815433258824186,
+          "coord": "roadmap:5-8"
+        },
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "元目标",
+          "score": 30.61168734954871,
+          "coord": "roadmap:7-12"
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "第五幕 确认与远方（27-29）",
+          "score": 19.520187788761522,
+          "coord": "novel_meta:63-70"
+        },
+        {
+          "path": "memory/default/profile/methods.md",
+          "label": "应对策略",
+          "score": 19.04749450563847,
+          "coord": "profile:31-40"
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 18.14104940401901,
+          "coord": "journal:1-6"
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q01",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/ai.md",
+          "label": "假说",
+          "score": 1.0,
+          "coord": "insight:8-12"
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "自己不想看自己写的内容",
+          "score": 0.7402240601423117,
+          "coord": "profile:31-34"
+        },
+        {
+          "path": "memory/default/journal/2026-09-22.md",
+          "label": "2026-09-22（段1）",
+          "score": 0.7084574915755364,
+          "coord": "journal:1-29"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.696980429054865,
+          "coord": "journal:32-54"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26（段1）",
+          "score": 0.6831293640658116,
+          "coord": "journal:74-98"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/ai.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.30952380952380953
+    },
+    {
+      "id": "q02",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24（段1）",
+          "score": 1.0993442728683167,
+          "coord": "journal:12-31"
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "规模焦虑",
+          "score": 1.0,
+          "coord": "profile:21-26"
+        },
+        {
+          "path": "memory/default/profile/methods.md",
+          "label": "缩小窗口",
+          "score": 0.9631193514805985,
+          "coord": "profile:7-10"
+        },
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "范围失控",
+          "score": 0.8849759325133493,
+          "coord": "profile:23-26"
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 0.7491141912349591,
+          "coord": "journal:1-6"
+        }
+      ],
+      "gold": [
+        "memory/default/profile/methods.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 0.3333333333333333,
+      "stability": 0.5
+    },
+    {
+      "id": "q03",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/隐形劳动.md",
+          "label": "隐形劳动",
+          "score": 1.06,
+          "coord": "emotion:1-19"
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.6269219115021598,
+          "coord": "journal:46-51"
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "2026-09-26（段1）",
+          "score": 0.592647789235413,
+          "coord": "journal:1-27"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 0.5486110190659912,
+          "coord": "journal:37-55"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24（段1）",
+          "score": 0.5379904455418181,
+          "coord": "journal:12-31"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/隐形劳动.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 0.5,
+      "rr": 1.0,
+      "stability": 0.4
+    },
+    {
+      "id": "q04",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "男主线：林远亭的公司",
+          "score": 1.06,
+          "coord": "novel_meta:9-15"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.8604369555543185,
+          "coord": "journal:1-8"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/2_雨夜未眠.md",
+          "label": "正文（段1）",
+          "score": 0.8329393295442253,
+          "coord": "chapter:6-86"
+        },
+        {
+          "path": "fiction/重生言情/4_成稿/4_专访.md",
+          "label": "4_专访（段1）",
+          "score": 0.7828101424688416,
+          "coord": "chapter:1-105"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/12_包子店吃早餐.md",
+          "label": "包子店吃早餐（段2）",
+          "score": 0.7410462694971163,
+          "coord": "chapter:75-133"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": 0.1111111111111111
+    },
+    {
+      "id": "q05",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/business.md",
+          "label": "假说",
+          "score": 1.0,
+          "coord": "insight:7-11"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.855750497560859,
+          "coord": "journal:1-30"
+        },
+        {
+          "path": "memory/default/journal/2026-09-23.md",
+          "label": "2026-09-23",
+          "score": 0.6984442310487267,
+          "coord": "journal:1-8"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-05.md",
+          "label": "2026-09-05",
+          "score": 0.5800105882692249,
+          "coord": "journal:1-25"
+        },
+        {
+          "path": "memory/default/roadmap/platform.md",
+          "label": "待决策",
+          "score": 0.5260538976864515,
+          "coord": "roadmap:21-26"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/business.md",
+        "memory/default/journal/2026-09-26.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q06",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "第 3 章《展会再遇》：基调落地——已定调",
+          "score": 1.06,
+          "coord": "novel_meta:23-26"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.764145623878667,
+          "coord": "journal:1-8"
+        },
+        {
+          "path": "fiction/职场言情/outline.md",
+          "label": "第一幕 重逢（1-5）",
+          "score": 0.7621911826551173,
+          "coord": "novel_meta:5-16"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.7302889335081371,
+          "coord": "journal:10-17"
+        },
+        {
+          "path": "fiction/职场言情/2_场景/4_圆桌辩论.md",
+          "label": "4_圆桌辩论（段1）",
+          "score": 0.7174055915327213,
+          "coord": "chapter:1-29"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/outline.md",
+        "fiction/职场言情/2_场景/3_展会再遇.md"
+      ],
+      "hit": true,
+      "recall": 0.5,
+      "rr": 0.3333333333333333,
+      "stability": null
+    },
+    {
+      "id": "q07",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/失败感.md",
+          "label": "失败感",
+          "score": 1.06,
+          "coord": "emotion:1-23"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/困境转化.md",
+          "label": "困境转化",
+          "score": 0.737668711848251,
+          "coord": "emotion:1-11"
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 0.68304034583203,
+          "coord": "journal:16-20"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 0.6747489785039644,
+          "coord": "journal:24-31"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26（段1）",
+          "score": 0.6646505446831521,
+          "coord": "journal:74-98"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/失败感.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q08",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "关于考试的梦",
+          "score": 1.06,
+          "coord": "emotion:1-16"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/关于考试的梦.md",
+          "label": "关于考试的梦",
+          "score": 1.0193018913819223,
+          "coord": "emotion:18-30"
+        },
+        {
+          "path": "memory/default/journal/2026-09-23.md",
+          "label": "2026-09-23",
+          "score": 0.7188291194407184,
+          "coord": "journal:32-38"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段5）",
+          "score": 0.6388486748806657,
+          "coord": "chapter:48-52"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-22.md",
+          "label": "2026-09-22",
+          "score": 0.573247863929242,
+          "coord": "journal:1-9"
+        }
+      ],
+      "gold": [
+        "fiction/观察站/1_情绪日记/关于考试的梦.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q09",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "待决策",
+          "score": 1.3,
+          "coord": "roadmap:24-28"
+        },
+        {
+          "path": "memory/fiction/roadmap/重生言情.md",
+          "label": "设定（段1）",
+          "score": 0.8685300770545183,
+          "coord": "roadmap:3-22"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段2）",
+          "score": 0.8260461102167691,
+          "coord": "chapter:22-33"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.8066224058129988,
+          "coord": "journal:32-54"
+        },
+        {
+          "path": "fiction/职场言情/5_定稿/10_同游母校.md",
+          "label": "10_同游母校（段1）",
+          "score": 0.7961869071969465,
+          "coord": "chapter:1-113"
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/business.md",
+        "memory/default/roadmap/creative.md",
+        "memory/default/roadmap/platform.md"
+      ],
+      "hit": true,
+      "recall": 0.3333333333333333,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q10",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/insight/creative.md",
+          "label": "已确认",
+          "score": 1.030934488125406,
+          "coord": "insight:3-6"
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 1.0,
+          "coord": "journal:22-24"
+        },
+        {
+          "path": "fiction/观察站/1_情绪日记/观察压力.md",
+          "label": "观察压力",
+          "score": 0.5461127118027276,
+          "coord": "emotion:1-33"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.5024109050417841,
+          "coord": "journal:10-17"
+        },
+        {
+          "path": "fiction/校园言情/2_提纲/9_第九章.md",
+          "label": "第九章（段6）",
+          "score": 0.4738944080138255,
+          "coord": "chapter:53-62"
+        }
+      ],
+      "gold": [
+        "memory/default/insight/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q11",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/profile/triggers.md",
+          "label": "睡醒时的千头万绪",
+          "score": 1.0,
+          "coord": "profile:7-10"
+        },
+        {
+          "path": "memory/default/profile/emotions.md",
+          "label": "高压与喘息",
+          "score": 0.9627326595870349,
+          "coord": "profile:5-10"
+        },
+        {
+          "path": "memory/default/journal/2026-09-21.md",
+          "label": "2026-09-21",
+          "score": 0.9236905466919105,
+          "coord": "journal:1-6"
+        },
+        {
+          "path": "memory/default/journal/2026-09-20.md",
+          "label": "2026-09-20",
+          "score": 0.6360428767031593,
+          "coord": "journal:1-8"
+        },
+        {
+          "path": "fiction/职场言情/2_场景/6_分享火烧云.md",
+          "label": "6_分享火烧云",
+          "score": 0.5302612178279318,
+          "coord": "chapter:1-26"
+        }
+      ],
+      "gold": [
+        "memory/default/profile/triggers.md",
+        "memory/default/profile/emotions.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q12",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "decision",
+          "score": 1.06,
+          "coord": "novel_meta:1-4"
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "情感阶梯表（覆盖 13–26）——思考中",
+          "score": 0.9211056862604843,
+          "coord": "novel_meta:7-12"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 0.7250898234878468,
+          "coord": "journal:1-10"
+        },
+        {
+          "path": "fiction/职场言情/decision.md",
+          "label": "第 5→8 章：情绪衔接",
+          "score": 0.7171508525531467,
+          "coord": "novel_meta:35-38"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.6755088189767134,
+          "coord": "journal:32-54"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/decision.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q13",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "fiction/职场言情/worldview.md",
+          "label": "男主线：林远亭的公司",
+          "score": 1.06,
+          "coord": "novel_meta:9-15"
+        },
+        {
+          "path": "memory/default/journal/2026-09-26.md",
+          "label": "2026-09-26",
+          "score": 0.6487191458914283,
+          "coord": "journal:1-30"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 0.5736825214885414,
+          "coord": "journal:57-64"
+        },
+        {
+          "path": "memory/game/journal/2026-09-26.md",
+          "label": "2026-09-26（段2）",
+          "score": 0.5574692255621532,
+          "coord": "journal:28-44"
+        },
+        {
+          "path": "memory/default/journal/2026-09-24.md",
+          "label": "2026-09-24",
+          "score": 0.546414606701432,
+          "coord": "journal:1-10"
+        }
+      ],
+      "gold": [
+        "fiction/职场言情/worldview.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    },
+    {
+      "id": "q14",
+      "arm": "idx-rule-bm25",
+      "hits": [
+        {
+          "path": "memory/default/roadmap/creative.md",
+          "label": "元目标",
+          "score": 1.0,
+          "coord": "roadmap:5-8"
+        },
+        {
+          "path": "memory/default/roadmap/business.md",
+          "label": "元目标",
+          "score": 0.9328442232685475,
+          "coord": "roadmap:7-12"
+        },
+        {
+          "path": "memory/default/journal/2026-09-25.md",
+          "label": "2026-09-25",
+          "score": 0.8528206579183537,
+          "coord": "journal:1-6"
+        },
+        {
+          "path": "memory/default/journal/2026-09-22.md",
+          "label": "2026-09-22（段1）",
+          "score": 0.8067371074031076,
+          "coord": "journal:1-29"
+        },
+        {
+          "path": "memory/fiction/journal/2026-09-05.md",
+          "label": "2026-09-05",
+          "score": 0.8029633742820663,
+          "coord": "journal:1-25"
+        }
+      ],
+      "gold": [
+        "memory/default/roadmap/creative.md"
+      ],
+      "hit": true,
+      "recall": 1.0,
+      "rr": 1.0,
+      "stability": null
+    }
+  ]
+}
