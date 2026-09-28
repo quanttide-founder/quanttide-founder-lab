@@ -8,9 +8,10 @@
 |------|------|------|
 | [AGENTS.md](AGENTS.md) | — | 分析框架的操作说明：字段、评分标尺、一致性检查、产出与流程 |
 | [src/ledger.py](src/ledger.py) | 本目录新增 | 算账工具 CLI：人均拆解、底料摊薄、三阶段达标线与盈亏平衡；参数分 [锁]/[L0]/[L1] 三级，L1 缺失拒绝计算；`report` 出三层报表（结论→账目→细算）与数据完整度 |
-| [tests/](tests/) | 本目录新增 | `present()`、共享数据层、一致性检查与判例重放的回归测试，42 项，无图形环境可跑 |
+| [tests/](tests/) | 本目录新增 | `present()`、共享数据层、一致性检查、判例重放与复核标注的回归测试，53 项，无图形环境可跑 |
 | [docs/alignment.md](docs/alignment.md) | 本目录新增 | 人机对齐用法：判例复核（维持/改判）与法条修订（改条文后重放），见下「分工」 |
 | [src/assess.py](src/assess.py) | 本目录新增 | 判例流水：决策环节 + 材料 → 能力分/输入依赖/证据等级/依据法条，`check` 跑一致性检查，重放不覆盖已复核判例，用法见 [docs/assess.md](docs/assess.md) |
+| [src/review_gui.py](src/review_gui.py) | 本目录新增 | 判例复核 GUI：本地标注 维持/改判，保存过一致性检查、改判自动记纠偏记录（用法见 [docs/alignment.md](docs/alignment.md)） |
 | [src/deviation.py](src/deviation.py) | 本目录新增 | 偏差地图汇总，用法见 [docs/deviation.md](docs/deviation.md) |
 | [data/纠偏记录.md](data/纠偏记录.md) | 本目录新增 | 每次人干预的流水：对象/纠正/分诊/影响行数，放大率的原始数据 |
 | [data/能力对照表.csv](data/能力对照表.csv) | 本目录新增 | 首例 8 环节的**判例库**（八字段，含依据法条与复核标注），AGENTS.md 产出 ① |
@@ -18,7 +19,7 @@
 | [data/火锅串串.md](data/火锅串串.md) | `docs/memory/roadmap` | 案例首例：开店计划，含定价、三步走、选址、三条纪律、底料采购与盲测评分表 |
 | [docs/AI 辅助开店.md](docs/AI%20辅助开店.md) | `docs/memory/insight` | 框架的原始论述：能力边界对照表、能扛与扛不住的事、后续两层验证方案 |
 
-**分工**：**判例**（具体决策）与**成文法**（决策准则）都显式存——判例在 `data/能力对照表.csv`（八字段 + 依据法条 + 复核），成文法在 `AGENTS.md` 条文（`标尺`、`检查§n`…，`assess.py` 是其可执行投影）。AI 按成文法自主判决，**人只做两层标注：判例层复核（维持/改判，抽查制）、法条层修订（改条文后重放，归纳制）**，机制见 [docs/alignment.md](docs/alignment.md)。不设逐条裁决环节，历史教训见 [data/review/2026-09-28-裁决往返为何没用.md](data/review/2026-09-28-裁决往返为何没用.md)。
+**分工**：**判例**（具体决策）与**成文法**（决策准则）都显式存——判例在 `data/能力对照表.csv`（八字段 + 依据法条 + 复核），成文法在 `AGENTS.md` 条文（`标尺`、`检查§n`…，`assess.py` 是其可执行投影）。AI 按成文法自主判决，**人只做两层标注：判例层复核（本地 GUI `review_gui.py`，维持/改判，抽查制）、法条层修订（改条文后重放，归纳制）**，机制见 [docs/alignment.md](docs/alignment.md)。不设逐条裁决环节，历史教训见 [data/review/2026-09-28-裁决往返为何没用.md](data/review/2026-09-28-裁决往返为何没用.md)。
 
 ## 计划要点
 

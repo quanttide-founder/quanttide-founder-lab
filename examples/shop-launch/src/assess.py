@@ -145,12 +145,11 @@ def read_csv(path: Path) -> list[list[str]]:
     return rows[1:]
 
 
-def check(path: Path) -> int:
-    """AGENTS.md 一致性检查：入库前必过，违规退出码 1。"""
-    rows = read_csv(path)
+def validate_rows(rows: list[list[str]], label: str = "") -> list[str]:
+    """对内存中的行跑一致性检查，返回违规清单（GUI 保存前复用，不复制规则）。"""
     bad: list[str] = []
     for i, row in enumerate(rows, start=2):
-        where = f"{path}:{i}"
+        where = f"{label}:{i}" if label else f"行 {i}"
         if len(row) != len(HEADER) or any(not c.strip() for c in row):
             bad.append(f"{where} 八字段必须齐全非空：{row}")
             continue
@@ -179,7 +178,13 @@ def check(path: Path) -> int:
             bad.append(f"{where} [{name}] 含 C 的局限须点名人工兜底部分：{limit}")
         if deps == {"C"} and score > 30:
             bad.append(f"{where} [{name}] 纯 C 应 ≤ 30，实为 {score}")
+    return bad
 
+
+def check(path: Path) -> int:
+    """AGENTS.md 一致性检查：入库前必过，违规退出码 1。"""
+    rows = read_csv(path)
+    bad = validate_rows(rows, str(path))
     if bad:
         print("\n".join(bad), file=sys.stderr)
         print(f"{len(bad)} 处违规 / {len(rows)} 行", file=sys.stderr)
