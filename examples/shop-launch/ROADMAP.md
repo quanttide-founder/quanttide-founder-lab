@@ -7,7 +7,7 @@
 ## 现状
 
 - 能力边界框架：决策环节 × 输入依赖 A/B/C × 证据等级 L0/L1/L2（`AGENTS.md`）
-- 算账工具：`src/ledger.py`（CLI，缺 L1 拒绝计算）与 `src/ledger_gui.py`（GUI，估算代填），只算 A 类
+- 算账工具：`src/ledger.py`（CLI，缺 L1 拒绝计算），只算 A 类；GUI 已移除，人的判断走 Label Studio
 - 首例：滁州热锅串串，`data/火锅串串.md`，含 `[锁]/[L0]/[L1]` 三级参数与缺口
 
 ## Phase 1 — 分：升级能力边界框架

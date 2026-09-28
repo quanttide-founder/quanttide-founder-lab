@@ -12,19 +12,19 @@
 
 最终人机交互收敛为两个界面：`ledger.py` CLI 出数据（缺 L1 拒绝计算），Label Studio 收人裁决（Phase 2 链路）。GUI 三层报表与「估算代填」策略随交互迁移一并废弃——估算代填唯一消费者是 GUI，CLI 恒为 `allow_estimates=False`。不依赖 Phase 1–3，先行可缩小更迭面。
 
-- [ ] **0.1 删除 `src/ledger_gui.py`，清理仅 GUI 使用的估算代填路径**
+- [x] **0.1 删除 `src/ledger_gui.py`，清理仅 GUI 使用的估算代填路径**
   - `ledger.py` 一并清理：`ESTIMATES`、`ESTIMATE_NOTE`、`present(allow_estimates=...)` 与 `estimated` 分支；`COMPLETENESS` 完整度保留，供 `report` 显示可信度
   - 验收：`grep -rn "ledger_gui\|allow_estimates\|ESTIMATES" src/` 无残留；`python3 src/ledger.py selftest`、`report` 正常
 
-- [ ] **0.2 测试收敛**
+- [x] **0.2 测试收敛**
   - `tests/test_ledger_present.py`：删除 GUI 估算策略用例（`test_gui_estimates` 等）与「CLI 与 GUI 共用同一份数据」的分叉断言，保留 CLI 拒绝计算、缺口、完整度与共享数据层；`allow_estimates=True` 的用例改写或删除
   - 验收：`python3 -m unittest discover -s tests` 全绿
 
-- [ ] **0.3 文档同步**（按变更规则先改 `AGENTS.md`）
+- [x] **0.3 文档同步**（按变更规则先改 `AGENTS.md`）
   - `AGENTS.md`：`src/` 定位行删 GUI、「### GUI」章节与策略分歧段删除，交互面写成 CLI + Label Studio；`README.md` 内容表删 GUI 行并记一笔；`ROADMAP.md` 现状行、`docs/ledger.md` 图形界面与自检章节同步
   - 验收：`grep -rni "ledger_gui\|GUI" --include="*.md" --include="*.py" .` 无非历史性残留
 
-- [ ] **0.4 交互定型**
+- [x] **0.4 交互定型**
   - 验收：README 内容表体现分工——数据处理在 `src/`，人的判断在 Label Studio（Phase 2），不再有第三个人机界面
 
 ---

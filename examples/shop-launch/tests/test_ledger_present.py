@@ -28,7 +28,7 @@ class TestFormulaSet(unittest.TestCase):
 
     def test_headline_matches_design(self):
         """设计表：保本 342/天、月利润 2221~8977、倍数 1.40~2.63。"""
-        r = L.present("shop", FULL, allow_estimates=False)
+        r = L.present("shop", FULL)
         self.assertTrue(r["computable"])
         (lab1, val1, note1), (lab2, val2, note2) = r["layer1"]
         self.assertEqual(lab1, "月利润")
@@ -61,66 +61,58 @@ class TestFormulaSet(unittest.TestCase):
 
 
 class TestCompleteness(unittest.TestCase):
-    """完整度是可信度的唯一量化指标，估算项不得计入已填。"""
+    """完整度是可信度的唯一量化指标，缺失项不得计入已填。"""
 
-    def test_wireframe_is_80(self):
-        """线框场景：填 4 项、食材成本率留空 → 80%。"""
+    def test_missing_is_80(self):
+        """线框场景：填 4 项、食材成本率留空 → 80%，且不可计算。"""
         p = dict(FULL, food_rate=None)
-        r = L.present("shop", p, allow_estimates=True)
+        r = L.present("shop", p)
         self.assertAlmostEqual(r["completeness"], 0.8)
-        self.assertEqual(r["estimated"], ["food_rate"])
-        self.assertEqual(r["missing"], [])
+        self.assertEqual(r["missing"], ["food_rate"])
+        self.assertFalse(r["computable"])
 
     def test_empty_is_zero_not_negative(self):
         r = L.present("shop", dict(FULL, ticket=None, traffic=None, staff=None,
-                                   utility_other=None, food_rate=None),
-                      allow_estimates=True)
+                                   utility_other=None, food_rate=None))
         self.assertGreaterEqual(r["completeness"], 0.0)
 
     def test_stall_ignores_food_rate(self):
-        """摆摊的分母不含 food_rate，不能被它污染成负数。"""
-        r = L.present("stall", stall_params(), allow_estimates=True)
-        self.assertEqual(r["estimated"], [])
+        """摆摊的分母不含 food_rate，不能被它污染。"""
+        r = L.present("stall", stall_params())
+        self.assertNotIn("food_rate", r["missing"])
         self.assertGreaterEqual(r["completeness"], 0.0)
 
     def test_stall_half(self):
-        r = L.present("stall", stall_params(daily=149), allow_estimates=True)
+        r = L.present("stall", stall_params(daily=149))
         self.assertAlmostEqual(r["completeness"], 0.5)
 
     def test_full_is_one(self):
-        r = L.present("shop", FULL, allow_estimates=False)
+        r = L.present("shop", FULL)
         self.assertAlmostEqual(r["completeness"], 1.0)
-        self.assertEqual(r["estimated"], [])
         self.assertEqual(r["missing"], [])
 
 
-class TestPolicyDivergence(unittest.TestCase):
-    """CLI 拒绝 / GUI 估算——两个策略都必须成立。"""
+class TestRefusePolicy(unittest.TestCase):
+    """唯一策略：L1 缺失不代填，拒绝计算。"""
 
     def test_cli_refuses(self):
         _, missing = L.shop(L.DEFAULT_MIX, 45000, 3500, None, None, None, None)
         self.assertEqual(len(missing), 4)
 
-    def test_gui_estimates(self):
-        r = L.present("shop", dict(FULL, food_rate=None), allow_estimates=True)
-        self.assertTrue(r["computable"])
-        self.assertAlmostEqual(r["completeness"], 0.8)
-
-    def test_shop_missing_l1_still_not_computable(self):
-        """staff 没有估算值，GUI 同样算不出，不得假装可算。"""
-        r = L.present("shop", dict(FULL, staff=None), allow_estimates=True)
+    def test_missing_l1_not_computable(self):
+        r = L.present("shop", dict(FULL, staff=None))
         self.assertFalse(r["computable"])
         self.assertIn("staff", r["missing"])
 
     def test_stall_always_computable(self):
         """摆摊公式恒可算（daily 缺失以达标线代入），waste 只影响成本侧。"""
-        r = L.present("stall", stall_params(), allow_estimates=True)
+        r = L.present("stall", stall_params())
         self.assertTrue(r["computable"])
         self.assertIn("waste", r["missing"])
 
 
 class TestSharedData(unittest.TestCase):
-    """CLI 与 GUI 共用同一份数据，不允许两边分叉。"""
+    """report 文本层与共享数据常量，不允许分叉。"""
 
     def test_gaps_shape(self):
         self.assertEqual(len(L.GAPS), 7)
@@ -145,18 +137,18 @@ class TestSharedData(unittest.TestCase):
 
 class TestLayer2(unittest.TestCase):
     def test_cost_rows_have_locked_rent(self):
-        r = L.present("shop", FULL, allow_estimates=False)
+        r = L.present("shop", FULL)
         cost = {row[0]: row for row in r["layer2"]["cost"]}
         self.assertEqual(cost["├ 房租/摊位"][1], "¥3,500")
         self.assertEqual(cost["├ 房租/摊位"][2], "锁")
 
     def test_income_derives_from_ticket_traffic(self):
-        r = L.present("shop", FULL, allow_estimates=False)
+        r = L.present("shop", FULL)
         inc = {row[0]: row for row in r["layer2"]["income"]}
         self.assertEqual(inc["日均流水"][1], "¥480~900")
 
     def test_stall_verdict_gap(self):
-        r = L.present("stall", stall_params(daily=149), allow_estimates=True)
+        r = L.present("stall", stall_params(daily=149))
         label, value, note = r["layer1"][0]
         self.assertIn("差 1 签/天", note)
 

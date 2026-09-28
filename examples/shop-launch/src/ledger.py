@@ -47,7 +47,7 @@ LOCK = {
 # [L0] 占位假设，未验证；探店带回荤签品类后必须更新
 DEFAULT_MIX = (60, 30, 10)
 
-# ── 待回填清单：CLI `gaps` 与 GUI 共用同一份数据 ──
+# ── 待回填清单：`gaps` 与 `report` 同一份数据 ──
 GAPS = [
     ("荤签品类比例", "探店：荤签品类", "直接决定均价与全部营收测算"),
     ("翻台率", "探店：翻台率", "决定档口店日接待上限，是月营业额的天花板"),
@@ -57,12 +57,6 @@ GAPS = [
     ("实际损耗率", "摆摊期每日盘点", "纪律上限 10%，实际值决定净利率"),
     ("底料盲测冠军款", "盲测评分表汇总", "定下后底料成本从区间变定值"),
 ]
-
-# ── [L0 行业参考] 估算占位。仅 GUI 传 allow_estimates=True 时生效；
-#    CLI 永不代填（脚本靠退出码判断，静默默认值是危险的）。
-#    食材成本率在 data/火锅串串.md 中不存在，35% 取餐饮业常见区间 30–40%。
-ESTIMATES = {"food_rate": 0.35}
-ESTIMATE_NOTE = {"food_rate": "食材成本率未填时按 35% 估算（行业参考 30–40%，未询价）"}
 
 # 参与完整度统计的 L1 参数（分母），按模式区分
 COMPLETENESS = {
@@ -226,34 +220,23 @@ def verdict(multi: tuple[float, float]) -> str:
     return f"⚠ 跨过保本线 {lo:.2f}~{hi:.2f} 倍"
 
 
-def present(mode: str, params: dict, allow_estimates: bool = False) -> dict:
-    """三层报表数据层。CLI `report` 与 GUI 共用。
+def present(mode: str, params: dict) -> dict:
+    """三层报表数据层。CLI `report` 使用。
 
-    params 取值为 None 表示未回填。allow_estimates=True 时，缺失项先用
-    ESTIMATES 代填并记入 estimated（完整度不算已填）；仍算不出的进 missing。
-    返回 {completeness, estimated, missing, computable, layer1, layer2}，
+    params 取值为 None 表示未回填。不代填、不估算：缺失项进 missing，
+    完整度 = 已填 / 该模式 L1 参数总数。
+    返回 {completeness, missing, computable, layer1, layer2}，
     layerN 每行是 (标签, 数值, 标签来源)。
     """
     p = dict(params)
     req = COMPLETENESS[mode]
-    estimated: list[str] = []
-    if allow_estimates:
-        # 只估该模式参与完整度统计的参数：否则会把无关参数算进分母
-        for key, val in ESTIMATES.items():
-            if key in req and p.get(key) is None:
-                p[key] = val
-                estimated.append(key)
-
     missing = [k for k in req if p.get(k) is None]
-    # 估算项不算已填：代填了但没有真实数据，完整度必须同步下降
-    filled = len(req) - len(missing) - len(estimated)
+    filled = len(req) - len(missing)
     completeness = max(0.0, filled / len(req)) if req else 1.0
 
     mix = p.get("mix") or DEFAULT_MIX
-    tag = "估算" if estimated else "推算"
     out: dict = {
         "completeness": completeness,
-        "estimated": estimated,
         "missing": missing,
         "computable": not missing,
         "layer1": [],
@@ -263,7 +246,7 @@ def present(mode: str, params: dict, allow_estimates: bool = False) -> dict:
     if mode == "stall":
         daily = p.get("daily")
         s = stall(mix, daily)
-        known = daily is not None and "daily" not in estimated
+        known = daily is not None
         diff = s["target"] - s["n"]
         if known:
             line1 = ("达标判定", f"{s['n']} 签/天", "✓ 达标" if s["met"] else f"✗ 差 {diff} 签/天")
@@ -296,7 +279,7 @@ def present(mode: str, params: dict, allow_estimates: bool = False) -> dict:
     fixed_parts = (p.get("rent") if p.get("rent") is not None else LOCK["rent_cap"],
                    p.get("staff"), p.get("utility_other"),
                    p.get("other_fixed") or 0)  # 其他固定成本可为 0，不计入完整度
-    if inc is None or any(v is None for v in fixed_parts):
+    if inc is None or any(v is None for v in fixed_parts) or p.get("food_rate") is None:
         out["computable"] = False
         out["layer1"] = [("月利润", "无法计算", "缺 L1，见待回填"),
                           ("保本线", "—", "回填后自动出")]
@@ -311,18 +294,17 @@ def present(mode: str, params: dict, allow_estimates: bool = False) -> dict:
          f"你的日均 ¥{r(inc['day'][0])}~{r(inc['day'][1])}"),
     ]
     out["layer2"]["income"] = [
-        ("日均流水", f"¥{r(inc['day'][0])}~{r(inc['day'][1])}", tag),
+        ("日均流水", f"¥{r(inc['day'][0])}~{r(inc['day'][1])}", "推算"),
         ("├ 客单价", f"¥{p['ticket'][0]:g}~{p['ticket'][1]:g}", "L1"),
         ("└ 日客流", f"{p['traffic'][0]:g}~{p['traffic'][1]:g} 人", "L1"),
-        ("月流水", f"¥{r(inc['month'][0])}~{r(inc['month'][1])}", tag),
+        ("月流水", f"¥{r(inc['month'][0])}~{r(inc['month'][1])}", "推算"),
     ]
     out["layer2"]["cost"] = [
         ("固定成本/月", f"¥{r(fixed)}", "推算"),
         ("├ 房租/摊位", f"¥{r(fixed_parts[0])}", "锁"),
         ("├ 人工", f"¥{r(fixed_parts[1])}", "L1"),
         ("└ 水电其他", f"¥{r(fixed_parts[2] + fixed_parts[3])}", "L1"),
-        ("食材成本率", pct(p["food_rate"]),
-         "估算 35%" if "food_rate" in estimated else "L1"),
+        ("食材成本率", pct(p["food_rate"]), "L1"),
         ("变动成本率", pct(varr), f"食材+损耗+底料 {pct(broth_rate)}"),
         ("保本月流水", f"¥{r(d['be_month'])}", f"占月流水 {d['be_month'] / inc['month'][1] * 100:.0f}~{d['be_month'] / inc['month'][0] * 100:.0f}%"),
     ]
@@ -476,7 +458,7 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("gaps", help="列出待回填项")
     sub.add_parser("selftest", help="自检")
-    sp = sub.add_parser("report", help="三层报表（与 GUI 同源）")
+    sp = sub.add_parser("report", help="三层报表（结论→账目→细算）")
     sp.add_argument("--mode", choices=["stall", "shop"], default="shop")
     add_mix(sp)
     sp.add_argument("--daily", type=int, default=None, help="摆摊实测日均签数 [L1]")
@@ -531,7 +513,7 @@ def parse_range(text: str | None) -> tuple[float, float] | None:
 
 
 def print_report(args, mix) -> int:
-    """三层报表的文本版，验证 present() 数据层；GUI 渲染同一份数据。"""
+    """三层报表：present() 数据层的文本渲染。"""
     mode = args.mode
     params = {
         "mix": mix,
@@ -544,7 +526,7 @@ def print_report(args, mix) -> int:
         "other_fixed": getattr(args, "other_fixed", None),
         "food_rate": getattr(args, "food_rate", None),
     }
-    res = present(mode, params, allow_estimates=False)
+    res = present(mode, params)
 
     print(f"══ 第一层：结论 ══    数据完整度 {res['completeness'] * 100:.0f}%")
     for label, value, note in res["layer1"]:

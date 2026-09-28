@@ -9,7 +9,7 @@
 | `AGENTS.md` | 框架的操作说明 | 字段、标尺、判定规则、流程 |
 | `docs/` | 框架规格 | 维度与规则的正式论述（`AI 辅助开店.md` 为自 memory 迁入的原文，不改） |
 | `data/` | 案例实例 | 一个场景一份，按下方字段填写 |
-| `src/` | 测算工具 | CLI（`ledger.py`，L1 缺失拒绝计算）与 GUI（`ledger_gui.py`，三层报表，缺失时估算代填）；两者共用 `present()`，不复制算术 |
+| `src/` | 数据处理工具 | CLI（`ledger.py`，L1 缺失拒绝计算）。人的判断走 Label Studio（见 `TODO.md` Phase 2），不建第三个人机界面 |
 | `tests/` | 回归测试 | `present()` 与共享数据层，无图形环境可跑 |
 | `README.md` | 当前状态 | 现状、下一步、判据 |
 
@@ -94,21 +94,14 @@ python3 src/ledger.py gaps              # 只看待回填项
 
 边界：工具只算 A 类。C 类（现场、感官、随机性）的结果不进工具，也不因工具算得出而被视为已验证。
 
-使用说明见 [`docs/ledger.md`](docs/ledger.md)（含 GUI 章节）。
-
-### GUI
+使用说明见 [`docs/ledger.md`](docs/ledger.md)。三层报表：
 
 ```sh
-python3 src/ledger_gui.py
+python3 src/ledger.py report --mode shop --ticket 32:45 --traffic 15:20 --staff 1200 --utility 800 --food-rate 0.35
+python3 -m unittest discover -s tests   # 19 项回归，无图形环境可跑
 ```
 
-三层报表：**结论**（月利润、保本线、倍数）→ **账目**（收入侧/成本侧逐项）→ **细算**（折叠参数）。顶栏切摆摊/档口店，右侧完整度条实时反映可信度。
-
-**策略分歧是有意的**：CLI 缺 L1 拒绝计算（退出码 2），GUI 估算代填并打 `[试算]` 徽标、完整度同步下降。估算项不计入完整度 —— 代填了不等于有数据。
-
-```sh
-python3 -m unittest discover -s tests   # 20 项回归，无图形环境可跑
-```
+**唯一策略**：缺 L1 不代填、不估算，拒绝计算（退出码 `2`）；数据完整度是结论的可信度指标，估算值不算已填。交互面只有两个：本 CLI 出数据，Label Studio 收人的判断。
 
 ## 新增案例
 
