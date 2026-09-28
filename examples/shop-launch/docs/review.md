@@ -6,6 +6,18 @@
 
 ## 最短可跑命令（整条往返）
 
+### 0. 准备：Label Studio 实例与项目
+
+本地实例（同 [task-board 工作流](../../docs/dev-guide/label-studio.md)）：
+
+```sh
+label-studio start --port 8090 --enable-legacy-api-token   # 已在跑可跳过
+```
+
+地址 http://localhost:8090。**项目只需建一次**：新建项目 → 把 `data/review/label-config.xml` 粘进 labeling config → 创建。已有项目「开店裁决队列 · 火锅串串」（id=3）可直接复用；项目页 **Import** 选 `data/review/任务清单.json` 导入 15 张卡。
+
+### 1. 导出与导入
+
 ```sh
 python3 src/review_export.py build     # 对照表 L0 行 + GAPS → data/裁决队列.json
 python3 src/review_export.py export    # 队列 → data/review/任务清单.json + label-config.xml
@@ -15,8 +27,11 @@ python3 src/review_export.py export    # 队列 → data/review/任务清单.jso
 裁决队列.json：15 条待裁决（已标注 0），feedback 保留
 15 个评审卡已写入 data/review/任务清单.json
 标注配置副本 data/review/label-config.xml
-下一步：Label Studio 新建项目（导入配置副本），再导入任务清单
 ```
+
+清单有更新时重新跑 `export` → 项目页 Import 再导一次（同 title 不重复建任务需注意：Label Studio 按任务追加，重复导入前先删旧任务或核对 task 数）。
+
+### 2. 标注与写回
 
 Label Studio 里逐条标注（四枚标签：先做/缓做/不做/有异议 + 理由），导出 JSON 后：
 
@@ -66,4 +81,4 @@ data/能力对照表.csv        写回推进的对象
 
 - **标注是判断，不是实测**。L0→L1 到此为止；升 L2（已实测）只能由探店/摆摊数据回填触发，标注推不动
 - **不回写 task-board**。其 `data/write/` 属于另一实验，本目录只产自己的清单与配置副本
-- **2.4 实操一轮是人工步骤**：建项目、导入、标注、导出、写回，验收看 L0 假设类条目是否全部获得 tag
+- **2.4 实操一轮是人工步骤**：建项目/导入已就绪（项目 id=3，15 卡），剩逐条标注 → 导出 → 写回，验收看 L0 假设类条目是否全部获得 tag
