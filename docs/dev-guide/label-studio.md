@@ -6,7 +6,7 @@
 
 | 项 | 值 |
 |----|-----|
-| 启动 | `label-studio start --port 8090 --enable-legacy-api-token --username admin@example.com --password admin123` |
+| 启动 | `label-studio start --port 8090 --enable-legacy-api-token` |
 | 地址 | http://localhost:8090 |
 | 版本 | 1.23.0（`label-studio version` 查看） |
 
