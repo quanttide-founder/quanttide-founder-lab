@@ -12,6 +12,7 @@
 - **Phase 1 分**：`src/assess.py`（推导 / `check` 一致性检查 / `--seed` 重放）+ 判例库 `data/能力对照表.csv`（八字段，8 行，种子 `docs/AI 辅助开店.md`）
 - **Phase 2 机制**：判例复核 GUI `src/review_gui.py`（本地标注，保存即校验，改判自动记纠偏记录；Label Studio 项目已删）、成文法条文编号（`检查§1–4`、`硬约束§n`）、判例优先重放（改判终审）、`docs/alignment.md` 用法、`data/纠偏记录.md` 流水；逐条裁决的两版实现（Label Studio 往返、直答队列）已删，反思见 `data/review/2026-09-28-裁决往返为何没用.md`
 - **Phase 3 schema**：`data/偏差地图.csv` + `src/deviation.py`（缺数据报缺口退出码 2，不输出空结论）
+- **Phase 2 标注对象**：GUI 重做——要标注的两类信息显式落 `data/决策判例.csv`（16 条实质决策）与 `data/准则候选.csv`（10 条隐含准则），互链校验；采纳自动渲染 `docs/决策准则.md`（原元评估 8 行视图被判「用处为 0」，降为背景）
 - **Phase 4 文档**：`docs/assess.md`、`docs/alignment.md`、`docs/deviation.md` 各一篇，README / AGENTS 挂链
 
 ## 待办
