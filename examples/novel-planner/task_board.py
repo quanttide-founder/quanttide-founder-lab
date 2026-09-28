@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """任务评审看板 → Label Studio 标注往返。
 
-用法：
-    python3 examples/task-board/task_board.py export [json路径] [--out 任务清单.json]
-    python3 examples/task-board/task_board.py merge <label-studio导出.json> [json路径]
+用法（推荐走 planner.py，亦可单独运行本文件）：
+    python3 examples/novel-planner/planner.py export [json路径] [--out 任务清单.json]
+    python3 examples/novel-planner/planner.py merge <label-studio导出.json> [json路径]
 
-export：把 data/write/ 最新一份任务连同已有意见导出为 Label Studio 可导入的任务清单。
+export：把 data/ 下最新一份任务扫描（文件名含「任务扫描」）连同已有意见导出为 Label Studio 可导入的任务清单。
 merge ：读取 Label Studio 导出的标注，按 title 写回 state.feedback（追加历史，重复导入不重复记账）。
 
 标注配置见同目录 label-config.xml：建项目时导入它，标签固定四枚。
@@ -19,8 +19,8 @@ from datetime import datetime
 from pathlib import Path
 
 TAGS = ["先做", "缓做", "不做", "有异议"]
-ROOT = Path(__file__).resolve().parent.parent.parent
-DEFAULT_DIR = ROOT / "data" / "write"
+# 任务扫描与标注中间数据一律落本项目 data/（本目录可写，外部只读）
+DEFAULT_DIR = Path(__file__).resolve().parent / "data"
 DEFAULT_OUT = DEFAULT_DIR / "label-studio" / "tasks.json"
 
 
@@ -51,10 +51,14 @@ def record(entry: dict, tag: str, text: str, when: str) -> None:
     entry.setdefault("history", []).append({"time": when, "tag": tag or entry.get("tag", ""), "text": text})
 
 
+# 任务扫描文件名模式：data/ 同时放检索与看板的中间 JSON，靠名字区分
+TASK_GLOB = "*任务扫描*.json"
+
+
 def latest_data() -> Path:
-    files = sorted(DEFAULT_DIR.glob("*.json"))
+    files = sorted(DEFAULT_DIR.glob(TASK_GLOB))
     if not files:
-        sys.exit(f"未找到数据文件：{DEFAULT_DIR}/*.json")
+        sys.exit(f"未找到数据文件：{DEFAULT_DIR}/{TASK_GLOB}")
     return files[-1]
 
 
@@ -166,10 +170,11 @@ def _parse(argv: list, allow_out: bool) -> tuple:
     return pos, out
 
 
-def main():
-    if len(sys.argv) < 2 or sys.argv[1] not in ("export", "merge"):
+def main(argv: list = None) -> None:
+    argv = sys.argv[1:] if argv is None else argv
+    if len(argv) < 1 or argv[0] not in ("export", "merge"):
         sys.exit(__doc__)
-    cmd, rest = sys.argv[1], sys.argv[2:]
+    cmd, rest = argv[0], argv[1:]
     {"export": cmd_export, "merge": cmd_merge}[cmd](rest)
 
 

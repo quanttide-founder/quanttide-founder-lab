@@ -1,7 +1,7 @@
 """任务看板固定测试：锁定读写、状态与清单生成行为。
 
-运行：python3 -m unittest discover -s tests
-不依赖图形界面；修改 examples/task-board/task_board.py 前后都应保持全绿。
+运行：python3 -m unittest discover -s examples/novel-planner/tests
+不依赖图形界面；修改 novel-planner/task_board.py 前后都应保持全绿。
 """
 
 import json
@@ -10,12 +10,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO / "examples" / "task-board"))
+PROJECT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT))
 
 import task_board  # noqa: E402
 
-FIXTURE = REPO / "data" / "write" / "2026-09-06-任务扫描.json"
+FIXTURE = PROJECT / "data" / "2026-09-06-任务扫描.json"
 
 
 FOLDERS = {"职场言情", "重生言情", "校园言情", "草稿箱"}
@@ -140,6 +140,22 @@ class DataFileTest(unittest.TestCase):
     def test_fixture_is_valid_json(self):
         with open(FIXTURE, encoding="utf-8") as f:
             json.load(f)
+
+    def test_latest_data_ignores_retrieval_json(self):
+        """data/ 同时放检索与看板的 JSON，export 只认任务扫描。"""
+        old = task_board.DEFAULT_DIR
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            task_board.DEFAULT_DIR = root
+            try:
+                (root / "segments.json").write_text("[]", encoding="utf-8")
+                with self.assertRaises(SystemExit):
+                    task_board.latest_data()
+                (root / "2026-09-06-任务扫描.json").write_text("{}", encoding="utf-8")
+                self.assertEqual(task_board.latest_data().name,
+                                 "2026-09-06-任务扫描.json")
+            finally:
+                task_board.DEFAULT_DIR = old
 
 
 class ExportMergeTest(unittest.TestCase):

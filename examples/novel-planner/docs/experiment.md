@@ -1,5 +1,7 @@
 # 实验设计：结构化索引与纯 RAG 对照
 
+> 合并说明：本实验原为独立实验 `knowl-searcher`（Rust），已并入[小说策划助手](../README.md)（`examples/novel-planner/`，Python）。下文命令以合并后的 CLI 为准；第一轮「索引粒度对照」的实现随 Rust 版下线，设计与结果仍记录在本篇。
+
 ## 背景与命题
 
 工具箱的工程思路是「结构存知识，向量管联想，规则做裁决」：目录约定与规则文件承载语义，读取时恢复成带证据坐标的模型单元；向量负责联想（语义近邻），规则在出口裁决。
@@ -92,7 +94,7 @@ score[u] = max( cosine(分块(query), 分块(u)) )   取 top-k（k=8）
 
 ## 第二轮实施
 
-实现集中在 `src/emotion.rs`：切分复用 `corpus::build_units`（`---` 分隔线，超 900 字续分），规则与评测都是纯函数，`tests/emotion.rs` 十项回归用内存夹具。中间数据一律 JSON，程序不读写文档：
+实现集中在 `searcher.py`：切分复用 `build_units`（`---` 分隔线，超 900 字续分），规则与评测都是纯函数，`tests/test_searcher.py` 十五项回归用内存夹具（另有一项锁定与 `data/segments.json` 的语料一致性）。中间数据一律 JSON，程序不读写文档：
 
 | 文件 | 作用 |
 |:--|:--|
@@ -103,11 +105,11 @@ score[u] = max( cosine(分块(query), 分块(u)) )   取 top-k（k=8）
 | `data/results-bm25.json` | 词法对照臂结果 |
 
 ```sh
-cargo run -- segments               # 重建段清单
-cargo run -- emotion --scorer embed # 向量臂
-cargo run -- emotion --scorer bm25  # 词法对照臂
-cargo run -- emotion --query first  # 首句对照档
-cargo test                          # 纯函数回归
+python3 examples/novel-planner/planner.py segments                   # 重建段清单
+python3 examples/novel-planner/planner.py emotion --scorer embed     # 向量臂
+python3 examples/novel-planner/planner.py emotion --scorer bm25      # 词法对照臂
+python3 examples/novel-planner/planner.py emotion --query first      # 首句对照档
+python3 -m unittest discover -s examples/novel-planner/tests         # 纯函数回归
 ```
 
 ## 第二轮结果
