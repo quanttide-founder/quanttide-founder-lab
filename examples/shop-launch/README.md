@@ -8,8 +8,10 @@
 |------|------|------|
 | [AGENTS.md](AGENTS.md) | — | 分析框架的操作说明：字段、评分标尺、一致性检查、产出与流程 |
 | [src/ledger.py](src/ledger.py) | 本目录新增 | 算账工具 CLI：人均拆解、底料摊薄、三阶段达标线与盈亏平衡；参数分 [锁]/[L0]/[L1] 三级，L1 缺失拒绝计算；`report` 出三层报表（结论→账目→细算）与数据完整度 |
-| [tests/](tests/) | 本目录新增 | `present()`、共享数据层与一致性检查的回归测试，39 项，无图形环境可跑 |
-| [src/assess.py](src/assess.py) | 本目录新增 | 能力边界评估流水：决策环节 + 材料 → 能力分/输入依赖/证据等级，`check` 子命令跑一致性检查 |
+| [tests/](tests/) | 本目录新增 | `present()`、共享数据层与一致性检查的回归测试，48 项，无图形环境可跑 |
+| [src/assess.py](src/assess.py) | 本目录新增 | 能力边界评估流水：决策环节 + 材料 → 能力分/输入依赖/证据等级，`check` 子命令跑一致性检查，用法见 [docs/assess.md](docs/assess.md) |
+| [src/review_export.py](src/review_export.py) / [src/review_merge.py](src/review_merge.py) | 本目录新增 | 裁决往返：队列构建 → Label Studio 评审卡 → 标注写回，用法见 [docs/review.md](docs/review.md) |
+| [src/deviation.py](src/deviation.py) | 本目录新增 | 偏差地图汇总，用法见 [docs/deviation.md](docs/deviation.md) |
 | [data/能力对照表.csv](data/能力对照表.csv) | 本目录新增 | 首例 8 环节的机器可读对照表（六字段），AGENTS.md 产出 ① |
 | [docs/ledger.md](docs/ledger.md) | 本目录新增 | 算账工具使用说明：参数三级来源、命令一览、三层报表、结果怎么读、边界 |
 | [data/火锅串串.md](data/火锅串串.md) | `docs/memory/roadmap` | 案例首例：开店计划，含定价、三步走、选址、三条纪律、底料采购与盲测评分表 |
