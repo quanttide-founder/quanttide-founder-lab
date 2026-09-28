@@ -19,7 +19,7 @@
 1. 导出任务清单（默认取 `data/` 下文件名含「任务扫描」的最新一份）：
 
    ```bash
-   python3 examples/novel-planner/planner.py export
+   python3 examples/novel-planner/src/planner.py export
    ```
 
    产出 `examples/novel-planner/data/label-studio/tasks.json`，已有意见随任务带出。
@@ -33,7 +33,7 @@
 5. 写回数据文件（不带路径参数则写最新一份）：
 
    ```bash
-   python3 examples/novel-planner/planner.py merge <导出文件.json>
+   python3 examples/novel-planner/src/planner.py merge <导出文件.json>
    ```
 
 ### 写回规则

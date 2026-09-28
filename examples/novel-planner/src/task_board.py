@@ -2,8 +2,8 @@
 """任务评审看板 → Label Studio 标注往返。
 
 用法（推荐走 planner.py，亦可单独运行本文件）：
-    python3 examples/novel-planner/planner.py export [json路径] [--out 任务清单.json]
-    python3 examples/novel-planner/planner.py merge <label-studio导出.json> [json路径]
+    python3 examples/novel-planner/src/planner.py export [json路径] [--out 任务清单.json]
+    python3 examples/novel-planner/src/planner.py merge <label-studio导出.json> [json路径]
 
 export：把 data/ 下最新一份任务扫描（文件名含「任务扫描」）连同已有意见导出为 Label Studio 可导入的任务清单。
 merge ：读取 Label Studio 导出的标注，按 title 写回 state.feedback（追加历史，重复导入不重复记账）。
@@ -19,8 +19,8 @@ from datetime import datetime
 from pathlib import Path
 
 TAGS = ["先做", "缓做", "不做", "有异议"]
-# 任务扫描与标注中间数据一律落本项目 data/（本目录可写，外部只读）
-DEFAULT_DIR = Path(__file__).resolve().parent / "data"
+# 任务扫描与标注中间数据一律落项目根的 data/（代码在 src/，本目录可写，外部只读）
+DEFAULT_DIR = Path(__file__).resolve().parent.parent / "data"
 DEFAULT_OUT = DEFAULT_DIR / "label-studio" / "tasks.json"
 
 

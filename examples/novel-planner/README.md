@@ -8,9 +8,9 @@
 
 | 文件 | 说明 |
 |------|------|
-| `planner.py` | CLI：`segments` / `emotion` / `export` / `merge` 四个子命令 |
-| `searcher.py` | 检索引擎：语料装载、切段、BM25、嵌入、出口裁决、评测 |
-| `task_board.py` | 任务评审看板：Label Studio 导出与写回 |
+| `src/planner.py` | CLI：`segments` / `emotion` / `export` / `merge` 四个子命令 |
+| `src/searcher.py` | 检索引擎：语料装载、切段、BM25、嵌入、出口裁决、评测 |
+| `src/task_board.py` | 任务评审看板：Label Studio 导出与写回 |
 | `label-config.xml` | Label Studio 标注配置，四枚标签固定，建项目时导入 |
 | `docs/experiment.md` | 检索实验设计、设计评审与两轮结果 |
 | `docs/cases.md` | 三则联想案例与使用边界 |
@@ -25,17 +25,17 @@
 
 ```sh
 # 检索：重建日志段清单 data/segments.json
-python3 examples/novel-planner/planner.py segments
+python3 examples/novel-planner/src/planner.py segments
 
 # 检索：情绪日记联想评测（词法臂离线可跑）
-python3 examples/novel-planner/planner.py emotion --scorer bm25
-python3 examples/novel-planner/planner.py emotion --scorer embed   # 需 GLM_API_KEY 或 KNOWL_EMBED_*
-python3 examples/novel-planner/planner.py emotion --query first    # 首句对照档
+python3 examples/novel-planner/src/planner.py emotion --scorer bm25
+python3 examples/novel-planner/src/planner.py emotion --scorer embed   # 需 GLM_API_KEY 或 KNOWL_EMBED_*
+python3 examples/novel-planner/src/planner.py emotion --query first    # 首句对照档
 
 # 看板：导出任务清单 → Label Studio 标注 → 写回
 # export 默认取 data/ 下文件名含「任务扫描」的最新一份（data/ 同时放检索 JSON）
-python3 examples/novel-planner/planner.py export
-python3 examples/novel-planner/planner.py merge <Label Studio 导出.json>
+python3 examples/novel-planner/src/planner.py export
+python3 examples/novel-planner/src/planner.py merge <Label Studio 导出.json>
 
 # 固定回归（改代码前先跑）
 python3 -m unittest discover -s examples/novel-planner/tests

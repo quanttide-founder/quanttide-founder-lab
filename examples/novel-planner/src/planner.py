@@ -2,10 +2,10 @@
 """小说策划助手 CLI：联想检索 + 任务评审看板。
 
 用法：
-    python3 examples/novel-planner/planner.py segments [--assets DIR] [--out FILE]
-    python3 examples/novel-planner/planner.py emotion [--scorer bm25|embed] [--query full|first]
-    python3 examples/novel-planner/planner.py export [任务扫描.json] [--out 任务清单.json]
-    python3 examples/novel-planner/planner.py merge <label-studio导出.json> [任务扫描.json]
+    python3 examples/novel-planner/src/planner.py segments [--assets DIR] [--out FILE]
+    python3 examples/novel-planner/src/planner.py emotion [--scorer bm25|embed] [--query full|first]
+    python3 examples/novel-planner/src/planner.py export [任务扫描.json] [--out 任务清单.json]
+    python3 examples/novel-planner/src/planner.py merge <label-studio导出.json> [任务扫描.json]
 
 segments：重建日志段清单 data/segments.json（金标标注与复现用）
 emotion  ：从 memory 原始日志段为情绪日记草稿捞相关片段，写 data/emotion-results.json；
@@ -25,7 +25,8 @@ from pathlib import Path
 import searcher
 import task_board
 
-PROJECT = Path(__file__).resolve().parent
+# 代码在 src/，PROJECT 取项目根（数据与语料都在它外面或下面）
+PROJECT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT / "data"
 # 语料在主仓库 assets/（只读），与旧版 knowl-searcher 同一相对深度
 DEFAULT_ASSETS = PROJECT.parents[3] / "assets"

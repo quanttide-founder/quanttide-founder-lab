@@ -1,7 +1,7 @@
 """任务看板固定测试：锁定读写、状态与清单生成行为。
 
 运行：python3 -m unittest discover -s examples/novel-planner/tests
-不依赖图形界面；修改 novel-planner/task_board.py 前后都应保持全绿。
+不依赖图形界面；修改 novel-planner/src/task_board.py 前后都应保持全绿。
 """
 
 import json
@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 
 PROJECT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT))
+sys.path.insert(0, str(PROJECT / "src"))
 
 import task_board  # noqa: E402
 

@@ -105,10 +105,10 @@ score[u] = max( cosine(分块(query), 分块(u)) )   取 top-k（k=8）
 | `data/results-bm25.json` | 词法对照臂结果 |
 
 ```sh
-python3 examples/novel-planner/planner.py segments                   # 重建段清单
-python3 examples/novel-planner/planner.py emotion --scorer embed     # 向量臂
-python3 examples/novel-planner/planner.py emotion --scorer bm25      # 词法对照臂
-python3 examples/novel-planner/planner.py emotion --query first      # 首句对照档
+python3 examples/novel-planner/src/planner.py segments                   # 重建段清单
+python3 examples/novel-planner/src/planner.py emotion --scorer embed     # 向量臂
+python3 examples/novel-planner/src/planner.py emotion --scorer bm25      # 词法对照臂
+python3 examples/novel-planner/src/planner.py emotion --query first      # 首句对照档
 python3 -m unittest discover -s examples/novel-planner/tests         # 纯函数回归
 ```
 

@@ -23,14 +23,15 @@ data/
   work/      工作方式语料
 examples/
   novel-planner/  小说策划助手（联想检索 + 任务评审看板，export/merge 与 Label Studio 往返）
+    src/          代码（planner / searcher / task_board）
     data/         中间数据（JSON：段清单、金标、两臂结果、任务扫描）
     tests/        固定测试（unittest，不依赖图形界面）
 ```
 
 ## 当前状态
 
-- 联想检索 `examples/novel-planner/planner.py emotion`：从 memory 原始日志段为情绪日记草稿捞相关片段（bm25 / embed 两臂，预注册 τ 不回调），口径与结果见 `examples/novel-planner/docs/experiment.md`
-- 任务评审 `examples/novel-planner/planner.py export`：读 `examples/novel-planner/data/*任务扫描*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
+- 联想检索 `examples/novel-planner/src/planner.py emotion`：从 memory 原始日志段为情绪日记草稿捞相关片段（bm25 / embed 两臂，预注册 τ 不回调），口径与结果见 `examples/novel-planner/docs/experiment.md`
+- 任务评审 `examples/novel-planner/src/planner.py export`：读 `examples/novel-planner/data/*任务扫描*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
 - 固定测试 `python3 -m unittest discover -s examples/novel-planner/tests`：锁定切段、规则与看板读写行为，改代码前先跑
 - 任务发现规则：`data/write/task-discovery.md`；写作规则：`data/write/writing-rules.md`；流程：`data/write/creation-log-workflow.md`
 
