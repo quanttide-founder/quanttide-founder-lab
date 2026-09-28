@@ -7,7 +7,7 @@
 ## 现状
 
 - 能力边界框架：决策环节 × 输入依赖 A/B/C × 证据等级 L0/L1/L2（`AGENTS.md`）
-- 算账工具：`src/ledger.py`（CLI，缺 L1 拒绝计算），只算 A 类；GUI 已移除，人的判断走 Label Studio
+- 算账工具：`src/ledger.py`（CLI，缺 L1 拒绝计算），只算 A 类；GUI 已移除；人的判断直接作答裁决队列（Label Studio 往返已废弃，反思见 `data/review/2026-09-28-裁决往返为何没用.md`）
 - 首例：滁州热锅串串，`data/火锅串串.md`，含 `[锁]/[L0]/[L1]` 三级参数与缺口
 
 ## Phase 1 — 分：升级能力边界框架
@@ -18,12 +18,12 @@
 - [x] 一致性检查自动化（纯 A ≥ 60、含 C ≤ 80、纯 C ≤ 30；`assess check`，违规退出码 1）
 - [x] 产出能力对照表，落 `data/`（`data/能力对照表.csv`，8 行）
 
-## Phase 2 — 做：接入 task-board
+## Phase 2 — 做：人工裁决回写
 
-把 AI 定不了的环节交给人工裁决，标注写回。
+把 AI 定不了的环节交给人工裁决，答案写回。原计划照搬 task-board 的 Label Studio 往返，实测无用已废弃（单人 8 问不值一个界面），改为直接作答：队列 JSON `feedback` → `review_merge.py` 状态式写回。
 
-- [x] 待人工判决的环节（L0 假设、C 类判断）导出为 Label Studio 评审卡（`review_export.py`，见 [docs/review.md](docs/review.md)）
-- [x] 标注写回，推进证据等级 L0 → L1（`review_merge.py` 幂等；L2 随实测回填推进）
+- [x] 待人工判决的环节（L0 假设、C 类判断）收进裁决队列（`review_export.py build`，8 条；L1 缺口要数据不要投票，不进队列）
+- [x] 作答写回，推进证据等级 L0 → L1（`review_merge.py` 幂等；L2 随实测回填推进）
 
 ## Phase 3 — 偏差地图：串联产出
 

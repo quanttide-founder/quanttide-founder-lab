@@ -1,84 +1,63 @@
-# 裁决往返使用说明
+# 裁决写回使用说明
 
-`src/review_export.py` 与 `src/review_merge.py` 的用户文档，对应 [TODO.md](../TODO.md) Phase 2。回答一件事：AI 定不了的环节，怎么交给人在 Label Studio 里裁决、再写回系统。
+`src/review_export.py` 与 `src/review_merge.py` 的用户文档，对应 [TODO.md](../TODO.md) Phase 2。回答一件事：AI 定不了的环节，人怎么作答、答案怎么写回对照表。
 
-程序只做导出与写回，标注本身在本地 Label Studio 界面完成；中间数据一律 JSON/CSV，全部落在本目录。清单格式与标注配置只读复用 `examples/task-board/`（不改该目录）。
+> 2026-09-28 设计纠偏：原 Label Studio 评审卡往返已废弃（答非所问、单人 8 问不值一个界面），反思见 [`data/review/2026-09-28-裁决往返为何没用.md`](../data/review/2026-09-28-裁决往返为何没用.md)。现在作答直接写队列 JSON，不经过任何 Web 界面。
 
-## 最短可跑命令（整条往返）
+## 裁决对象
 
-### 0. 准备：Label Studio 实例与项目
+只收**可裁决**的条目——对照表中证据等级 L0 的行：
 
-本地实例（同 [task-board 工作流](../../docs/dev-guide/label-studio.md)）：
-
-```sh
-label-studio start --port 8090 --enable-legacy-api-token   # 已在跑可跳过
-```
-
-地址 http://localhost:8090。**项目只需建一次**：新建项目 → 把 `data/review/label-config.xml` 粘进 labeling config → 创建。已有项目「开店裁决队列 · 火锅串串」（id=3）可直接复用；项目页 **Import** 选 `data/review/任务清单.json` 导入 15 张卡。
-
-### 1. 导出与导入
-
-```sh
-python3 src/review_export.py build     # 对照表 L0 行 + GAPS → data/裁决队列.json
-python3 src/review_export.py export    # 队列 → data/review/任务清单.json + label-config.xml
-```
-
-```
-裁决队列.json：15 条待裁决（已标注 0），feedback 保留
-15 个评审卡已写入 data/review/任务清单.json
-标注配置副本 data/review/label-config.xml
-```
-
-清单有更新时重新跑 `export` → 项目页 Import 再导一次（同 title 不重复建任务需注意：Label Studio 按任务追加，重复导入前先删旧任务或核对 task 数）。
-
-### 2. 标注与写回
-
-Label Studio 里逐条标注（四枚标签：先做/缓做/不做/有异议 + 理由），导出 JSON 后：
-
-```sh
-python3 src/review_merge.py <Label Studio 导出.json>
-```
-
-```
-写回 1 条，对照表推进 1 行
-```
-
-再跑一次同文件应输出 `写回 0 条`——幂等是硬要求。
-
-## 待裁决队列的三处素材
-
-| 素材 | 归类 | 条数 |
+| 类型 | 条数 | 问题 |
 |------|------|------|
-| `data/能力对照表.csv` 的 L0 行 | L0假设 | 5 |
-| 其中含 C 的环节 | C类判断 | 3 |
-| `src/ledger.py` 的 `GAPS` 待回填清单 | L1缺口 | 7 |
+| L0假设 | 5 | 该环节 L0 分数采不采纳 |
+| C类判断 | 3 | 含 C 的部分由谁兜底、怎么兜底 |
 
-`build` 重建时按 `title` 对齐去重、保留已有 `feedback` 与提出日期，重复跑不丢标注。对照表升到 L1/L2 的行不再进队列。
+**L1 缺口（翻台率、询价、损耗率……）不进队列**：它们要数据不要投票，走 `ledger.py gaps` 与实测回填（TODO 3.3）。行推进到 L1 后自动退出队列。
+
+## 最短可跑命令
+
+```sh
+python3 src/review_export.py   # 对照表 L0 行 → data/裁决队列.json
+```
+
+```
+裁决队列.json：8 条待裁决，已答 0（作答写 state.feedback：tag ∈ 采纳/否决/存疑 + text 理由）
+```
+
+**作答**——编辑 `data/裁决队列.json` 的 `state.feedback`，或在对话中给出由 agent 代填：
+
+```json
+"state": {"feedback": {"市场调研：L0 分 80 采不采纳": {"tag": "采纳", "text": "滁州公开竞品数据可喂"}}}
+```
+
+**写回**：
+
+```sh
+python3 src/review_merge.py
+```
+
+```
+推进：市场调研：采纳 → L1/待验证
+已写回 1 项，未答 7/8
+```
 
 ## 写回规则
 
-按 `title` 对齐，取每条任务最后一个标注，`feedback` 追加 `history` 快照，内容一致不重复记账（照 task-board 的 merge 语义）。多一条推进规则：
+状态式（不是事件式），天然幂等——重复跑不会重复推进：
 
-| 标注 | 对照表动作 |
+| 作答 | 对照表动作 |
 |------|-----------|
-| 带理由的标签（先做/缓做/不做 + text） | 证据等级 L0 → L1（人的本地判断已喂入） |
-| 有异议 | 该环节验证状态 → 已证伪 |
-| 证据等级 L2 的行 | **拒绝覆盖**，feedback 照记、对照表不动（`AGENTS.md` 硬约束） |
-| L1缺口条目（folder=待回填） | 不在对照表，只写 feedback |
+| 采纳 + 理由 | 证据等级 L0 → L1（人的本地判断已喂入） |
+| 否决 + 理由 | 验证状态 → 已证伪 |
+| 存疑 | 不动，留 L0 等数据 |
+| 无理由 | 不生效，打印提示 |
+| 证据等级 L2 的行 | **拒绝覆盖**，打印跳过（`AGENTS.md` 硬约束） |
 
-`title` 对不上的标注跳过并告警；未匹配清单的评审卡不落盘。
-
-## 目录约定
-
-```
-data/裁决队列.json        队列（任务 + feedback），写回目标
-data/review/任务清单.json  Label Studio 可导入的评审卡
-data/review/label-config.xml  标注配置副本（复制自 task-board）
-data/能力对照表.csv        写回推进的对象
-```
+**分数调整不走标签**：直接改 `data/能力对照表.csv`，`assess check` 把关。
 
 ## 边界
 
-- **标注是判断，不是实测**。L0→L1 到此为止；升 L2（已实测）只能由探店/摆摊数据回填触发，标注推不动
-- **不回写 task-board**。其 `data/write/` 属于另一实验，本目录只产自己的清单与配置副本
-- **2.4 实操一轮是人工步骤**：建项目/导入已就绪（项目 id=3，15 卡），剩逐条标注 → 导出 → 写回，验收看 L0 假设类条目是否全部获得 tag
+- **作答是判断，不是实测**。L0→L1 到此为止；升 L2（已实测）只能由探店/摆摊数据回填触发
+- **改字段、标尺、判定规则先改 `AGENTS.md`**，本篇与 README 记一笔
+- **再搭界面的门槛**：评审人 ≥ 2 或轮次 ≥ 2 或裁决项 ≥ 30，三者均不满足就继续直答（反思文档结论）

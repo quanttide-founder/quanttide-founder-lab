@@ -9,7 +9,7 @@
 | `AGENTS.md` | 框架的操作说明 | 字段、标尺、判定规则、流程 |
 | `docs/` | 框架规格与工具用法 | 维度与规则的正式论述 + 各工具用户文档（assess / review / deviation / ledger）；`AI 辅助开店.md` 为自 memory 迁入的原文，不改 |
 | `data/` | 案例实例 | 一个场景一份，按下方字段填写 |
-| `src/` | 数据处理工具 | CLI（`ledger.py`，L1 缺失拒绝计算）。人的判断走 Label Studio（见 `TODO.md` Phase 2），不建第三个人机界面 |
+| `src/` | 数据处理工具 | CLI（`ledger.py`，L1 缺失拒绝计算）。人的判断直接作答裁决队列（见 `TODO.md` Phase 2），不建 Web 界面 |
 | `tests/` | 回归测试 | `present()`、共享数据层与一致性检查，无图形环境可跑 |
 | `README.md` | 当前状态 | 现状、下一步、判据 |
 
@@ -79,7 +79,7 @@ python3 src/assess.py --seed "docs/AI 辅助开店.md" --out data/能力对照�
 python3 src/assess.py check data/能力对照表.csv   # 入库前必过，违规退出码 1
 ```
 
-人工裁决的往返（队列 → Label Studio → 写回）见 [`docs/review.md`](docs/review.md)。
+人工裁决（队列 → 直接作答 → 写回）见 [`docs/review.md`](docs/review.md)。
 
 ## 测算工具
 
@@ -105,10 +105,10 @@ python3 src/ledger.py gaps              # 只看待回填项
 
 ```sh
 python3 src/ledger.py report --mode shop --ticket 32:45 --traffic 15:20 --staff 1200 --utility 800 --food-rate 0.35
-python3 -m unittest discover -s tests   # 48 项回归，无图形环境可跑
+python3 -m unittest discover -s tests   # 50 项回归，无图形环境可跑
 ```
 
-**唯一策略**：缺 L1 不代填、不估算，拒绝计算（退出码 `2`）；数据完整度是结论的可信度指标，估算值不算已填。交互面只有两个：本 CLI 出数据，Label Studio 收人的判断。
+**唯一策略**：缺 L1 不代填、不估算，拒绝计算（退出码 `2`）；数据完整度是结论的可信度指标，估算值不算已填。交互面只有两个：本 CLI 出数据，裁决队列（`feedback` 作答）收人的判断。
 
 ## 新增案例
 
