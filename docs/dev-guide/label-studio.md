@@ -12,19 +12,19 @@
 
 ## 任务评审标注
 
-工具在 `examples/task-board/`，读写 `data/write/*.json` 的评审意见（`state.feedback`）。
+工具在 `examples/novel-planner/`，读写 `examples/novel-planner/data/*任务扫描*.json` 的评审意见（`state.feedback`）。
 
 ### 步骤
 
-1. 导出任务清单（默认取 `data/write/` 最新一份）：
+1. 导出任务清单（默认取 `data/` 下文件名含「任务扫描」的最新一份）：
 
    ```bash
-   python3 examples/task-board/task_board.py export
+   python3 examples/novel-planner/planner.py export
    ```
 
-   产出 `data/write/label-studio/tasks.json`，已有意见随任务带出。
+   产出 `examples/novel-planner/data/label-studio/tasks.json`，已有意见随任务带出。
 
-2. Label Studio 新建项目，导入 `examples/task-board/label-config.xml`，再导入任务清单。
+2. Label Studio 新建项目，导入 `examples/novel-planner/label-config.xml`，再导入任务清单。
 
 3. 逐条标注：四枚标签 `先做 / 缓做 / 不做 / 有异议` 选一，理由写进文本框。已有意见显示在「当前意见」栏，照旧可改。
 
@@ -33,7 +33,7 @@
 5. 写回数据文件（不带路径参数则写最新一份）：
 
    ```bash
-   python3 examples/task-board/task_board.py merge <导出文件.json>
+   python3 examples/novel-planner/planner.py merge <导出文件.json>
    ```
 
 ### 写回规则
@@ -43,6 +43,6 @@
 - 内容与当前值一致时不重复记账，重复 merge 幂等
 - `title` 对不上的标注跳过并告警
 
-## 相关性金标抽查（knowl-searcher）
+## 相关性金标抽查（novel-planner 检索）
 
-`examples/knowl-searcher/data/related/diary.json` 的 AI 判断要经作者抽查。抽查走同一模式：程序按 `data/pool.json` 导出候选对，人在界面里逐对判有用/没用，导出后按（查询, 段 id）写回。该导出命令尚未实现，属下轮工作。
+`examples/novel-planner/data/related/diary.json` 的 AI 判断要经作者抽查。抽查走同一模式：程序按 `examples/novel-planner/data/pool.json` 导出候选对，人在界面里逐对判有用/没用，导出后按（查询, 段 id）写回。该导出命令尚未实现，属下轮工作。

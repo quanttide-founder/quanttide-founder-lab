@@ -9,28 +9,30 @@
 | 层 | 位置 | 性质 |
 |----|------|------|
 | 规格 | `docs/` | 方法论、流程与规则，是持久的沉淀物 |
-| 数据 | `data/` | 案例与语料，结构化是演进方向；程序读写的数据也在这里（如 `data/write/*.json`） |
+| 数据 | `data/` | 案例与语料，结构化是演进方向；程序的中间 JSON 落各案例自己的 `data/` |
 | 代码 | `examples/` | 轻量脚本，快更迭的验证载体，按需重建与废弃 |
 
 ## 目录结构
 
 ```
 docs/
-  write/     写作规则与创作日志的收集整理流程
+  dev-guide/ 标注工作流等工具说明
 data/
-  write/     任务扫描数据（*.json，看板读写）
+  write/     写作规则与任务发现（task-discovery / writing-rules / creation-log-workflow）
   agent/     情绪结构化推演实例
   work/      工作方式语料
 examples/
-  task-board/  任务评审看板（export/merge 与 Label Studio 往返）
-tests/           固定测试（unittest，不依赖图形界面）
+  novel-planner/  小说策划助手（联想检索 + 任务评审看板，export/merge 与 Label Studio 往返）
+    data/         中间数据（JSON：段清单、金标、两臂结果、任务扫描）
+    tests/        固定测试（unittest，不依赖图形界面）
 ```
 
 ## 当前状态
 
-- 任务评审 `examples/task-board/task_board.py`：读取 `data/write/*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
-- 固定测试 `tests/`：`python3 -m unittest discover -s tests`，锁定看板读写与状态行为，改代码先跑它
-- 任务发现规则：`docs/write/task-discovery.md`；写作规则：`docs/write/writing-rules.md`；流程：`docs/write/creation-log-workflow.md`
+- 联想检索 `examples/novel-planner/planner.py emotion`：从 memory 原始日志段为情绪日记草稿捞相关片段（bm25 / embed 两臂，预注册 τ 不回调），口径与结果见 `examples/novel-planner/docs/experiment.md`
+- 任务评审 `examples/novel-planner/planner.py export`：读 `examples/novel-planner/data/*任务扫描*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
+- 固定测试 `python3 -m unittest discover -s examples/novel-planner/tests`：锁定切段、规则与看板读写行为，改代码前先跑
+- 任务发现规则：`data/write/task-discovery.md`；写作规则：`data/write/writing-rules.md`；流程：`data/write/creation-log-workflow.md`
 
 ## 工作方式
 

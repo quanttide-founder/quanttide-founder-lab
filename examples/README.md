@@ -4,9 +4,8 @@
 
 ## 案例
 
-- [knowl-searcher](knowl-searcher/README.md)：结构化索引与纯 RAG 对照实验，验证「结构存知识」与「向量管联想」；
-- [shop-launch](shop-launch/README.md)：开店计划，以及一次「AI 能干什么、不能干什么」的实地验证；
-- [task-board](task-board/README.md)：任务评审看板，导出任务到 Label Studio 标注，再把标注写回 JSON。
+- [novel-planner](novel-planner/README.md)：小说策划助手，从 memory 原始日志为加工中的创作素材捞相关片段（联想检索），并把任务扫描导出到 Label Studio 标注、再把标注写回 JSON；
+- [shop-launch](shop-launch/README.md)：开店计划，以及一次「AI 能干什么、不能干什么」的实地验证。
 
 ## 约定
 
