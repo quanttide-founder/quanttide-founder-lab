@@ -4,13 +4,13 @@
 
 **目录约定**（AGENTS.md）：**读不受限，写只落 `shop-launch/`**。外部实验与上层文档均可读作复用参考，外部目录一律不改；所有脚本、中间 JSON、对照表只写本目录。实地动作（探店、摆摊）是数据来源，其产物同样落回本目录 `data/`。
 
-**依赖链**：Phase 1（产出对照表）→ Phase 2（裁决回写推进证据等级）→ Phase 3（汇总偏差地图，受实测数据到位时间约束）。
+**依赖链**：Phase 1（产出判例库）→ Phase 2（人机对齐：判例复核与法条修订）→ Phase 3（汇总偏差地图，受实测数据到位时间约束）。
 
 ---
 
 ## Phase 0 — 收敛：移除 GUI，只留数据处理代码（独立项，建议先行）
 
-最终人机交互收敛：`ledger.py` CLI 出数据（缺 L1 拒绝计算），人的判断收在 Phase 2 裁决链路（当时定为 Label Studio，后经实测废弃改直答，见 `data/review/2026-09-28-裁决往返为何没用.md`）。GUI 三层报表与「估算代填」策略随交互迁移一并废弃——估算代填唯一消费者是 GUI，CLI 恒为 `allow_estimates=False`。不依赖 Phase 1–3，先行可缩小更迭面。
+最终人机交互收敛：`ledger.py` CLI 出数据（缺 L1 拒绝计算），人的判断收在 Phase 2 对齐链路（Label Studio 往返与直答队列两版均废弃，终态为判例/成文法双标注，见 `data/review/2026-09-28-裁决往返为何没用.md`）。GUI 三层报表与「估算代填」策略随交互迁移一并废弃——估算代填唯一消费者是 GUI，CLI 恒为 `allow_estimates=False`。不依赖 Phase 1–3，先行可缩小更迭面。
 
 - [x] **0.1 删除 `src/ledger_gui.py`，清理仅 GUI 使用的估算代填路径**
   - `ledger.py` 一并清理：`ESTIMATES`、`ESTIMATE_NOTE`、`present(allow_estimates=...)` 与 `estimated` 分支；`COMPLETENESS` 完整度保留，供 `report` 显示可信度
@@ -21,11 +21,11 @@
   - 验收：`python3 -m unittest discover -s tests` 全绿
 
 - [x] **0.3 文档同步**（按变更规则先改 `AGENTS.md`）
-  - `AGENTS.md`：`src/` 定位行删 GUI、「### GUI」章节与策略分歧段删除，交互面写成 CLI + 裁决链路；`README.md` 内容表删 GUI 行并记一笔；`ROADMAP.md` 现状行、`docs/ledger.md` 图形界面与自检章节同步
+  - `AGENTS.md`：`src/` 定位行删 GUI、「### GUI」章节与策略分歧段删除，交互面写成 CLI + 对齐链路；`README.md` 内容表删 GUI 行并记一笔；`ROADMAP.md` 现状行、`docs/ledger.md` 图形界面与自检章节同步
   - 验收：`grep -rni "ledger_gui\|GUI" --include="*.md" --include="*.py" .` 无非历史性残留
 
 - [x] **0.4 交互定型**
-  - 验收：README 内容表体现分工——数据处理在 `src/`，人的判断在裁决队列（Phase 2），不再有第三个人机界面
+  - 验收：README 内容表体现分工——数据处理在 `src/`，人的判断在判例复核与法条修订（Phase 2），不再有第三个人机界面
 
 ---
 
@@ -47,26 +47,29 @@
 - [x] **1.4 产出落 `data/` 并接进文档**
   - 验收：对照表在 `data/`；`README.md` 内容表与 `AGENTS.md` 产出节链接到它
 
-## Phase 2 — 做：人工裁决回写（ROADMAP「做」）
+## Phase 2 — 做：人机对齐（判例与成文法，ROADMAP「做」）
 
-复用 task-board 的教训已反思归档（`data/review/2026-09-28-裁决往返为何没用.md`）：原照搬其 Label Studio 往返被判无用——排期标签答非所问、L1 缺口混入裁决、单人 8 问不值界面。现行设计：队列只收可裁决项，作答直接写 `feedback`（采纳/否决/存疑 + 理由），状态式写回。再搭界面的门槛：评审人 ≥ 2 或轮次 ≥ 2 或裁决项 ≥ 30。
+**定位**：具体决策（判例）与决策准则（成文法）都显式存，各配与之匹配的人工标注。AI 按成文法自主判决，人只做两层标注——**判例层复核**（维持/改判，抽查制）、**法条层修订**（改 `AGENTS.md` 条文后同步 `assess.py` 重放，归纳制）。逐条裁决的两版实现（Label Studio 往返、直答队列）均因把决策负担推给人而废弃，反思归档 `data/review/2026-09-28-裁决往返为何没用.md`。机制定义见 `AGENTS.md`「人机对齐」，用法见 `docs/alignment.md`。
 
-- [x] **2.1 定义待裁决队列**
-  - 素材：`data/能力对照表.csv` 的 L0 行（含 C 的归 C类判断）。**L1 缺口不进队列**——要数据不要投票，走 `ledger gaps` 与 3.3
-  - 产出：`data/裁决队列.json`，每条含 `title, type, folder, hint, meta, date` 与 `state.feedback(tag ∈ 采纳/否决/存疑, text, …)`
-  - 验收：条目与 L0 行一一对应无重复；`feedback` 结构可被写回脚本消费
+- [x] **2.1 成文法条文显式编号**
+  - `AGENTS.md` 一致性检查 → `检查§1–4`，硬约束 → `硬约束§n`，配合既有的 `标尺`/`依A·B·C`/`证据`，判例可引用
+  - 验收：判例 `依据法条` 列能写出形如 `依A·依C·标尺·检查§2` 的引用
 
-- [x] **2.2 构建裁决队列**（原「导出 Label Studio 评审卡」已废弃，反思见 2.1 上方）
-  - 产出：`src/review_export.py build`，对照表 L0 行 → `data/裁决队列.json`
-  - 验收：队列只含 L0假设/C类判断两类；行推进到 L1 后自动退出队列
+- [x] **2.2 判例库显式化（八字段）**
+  - 产出：`data/能力对照表.csv` 扩为八字段（+ `依据法条` + `复核`）；`src/assess.py` 推导自动填法条引用，`check` 校验 `复核 ∈ 未复核/维持/改判`
+  - 验收：`--seed` 重放不覆盖 `维持/改判` 行（改判终审），未复核行重算；`tests/` 覆盖三态重放
 
-- [x] **2.3 作答写回**（原「解析 Label Studio 导出」已废弃）
-  - 产出：`src/review_merge.py`，读 `feedback` → 推进对照表 `证据等级`（采纳+理由：L0→L1）与 `验证状态`（否决+理由：已证伪）；L2 行拒绝覆盖（`AGENTS.md` 硬约束）；分数调整直接改表由 `assess check` 把关
-  - 验收：状态式天然幂等（重复跑不重复推进）；`tests/` 覆盖「L0→L1」「L2 拒绝」「无理由不生效」
+- [x] **2.3 两种标注通道落文档与数据**
+  - 产出：`docs/alignment.md`（判例复核 / 法条修订怎么走、重放规则、放大率算法）、`data/纠偏记录.md`（层/对象/标注/分诊/影响行数）
+  - 验收：README 分工行、`AGENTS.md` 产出节、`docs/assess.md` 均链到 alignment；纠偏记录有首条（本轮设计纠偏即第一条）
 
-- [ ] **2.4 实操一轮裁决**（人工，非代码）
-  - ⬜ 对 8 条逐条作答（对话给出或编辑 `state.feedback`）→ 跑 `review_merge.py` → `assess check`
-  - 验收：L0 假设类条目全部获得 tag，对照表证据等级出现 L1
+- [x] **2.4 拆除逐条裁决实现**
+  - 删 `src/review_export.py`、`src/review_merge.py`、`data/裁决队列.json`、`tests/test_review.py`
+  - 验收：全库 grep 无 `review_export|review_merge|裁决队列` 残留引用（反思文档的历史记述除外）
+
+- [ ] ⏳ **2.5 实测一轮对齐循环**（人工，非代码）
+  - 抽查 → 判例改判（记纠偏记录）→ 分诊偶发/通则 → 通则修 `AGENTS.md` 条文 → 同步 `assess.py` → `--seed` 重放 → `git diff` 取影响行数记账
+  - 验收：纠偏记录含至少 1 条成文法层条目且填了影响行数；重放后 `check` 全过、改判行仍在；得出首个**放大率**（影响行数 / 干预次数）
 
 ## Phase 3 — 偏差地图：串联产出（ROADMAP「偏差地图」）
 
@@ -87,7 +90,7 @@
 
 - [x] **4.1 新工具用法各成一篇**（随对应任务交付，不攒到最后）
   - `docs/assess.md`：评估流水与一致性检查怎么跑、输出表字段怎么读（Phase 1）
-  - `docs/review.md`：裁决队列 → 直接作答 → 状态式写回，命令与规则（Phase 2）
+  - `docs/alignment.md`：判例复核与法条修订两种标注、重放规则、放大率算法（Phase 2）
   - `docs/deviation.md`：偏差地图 schema 与汇总脚本用法（Phase 3）
   - 验收：每篇含「一条最短可跑命令 + 输出示例 + 边界说明」；GUI 相关内容随 0.3 从 `ledger.md` 移除
 

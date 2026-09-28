@@ -13,8 +13,12 @@
     分数带（eval 未显式给 --score 时）：纯 A 70 / A+C 60 / A+B 50 / B 45 / 纯 C 25。
     证据等级默认 L0、验证状态默认待验证 —— 机器推导一律是待验证假设，不是结论。
 
-与 AGENTS.md 的关系：本工具只做 A 类环节的流水化与一致性检查；
-B/C 的证据等级推进（L0→L1→L2）由人工裁决写回，不在此臆造。
+与 AGENTS.md 的关系（判例与成文法，见其「人机对齐」节）：
+    本脚本是成文法的可执行投影——词表、分数带、检查规则与 AGENTS.md 条文对应，
+    改条文先改那里，再同步这里。
+    输出是判例：`依据法条` 列引用条文（依A·标尺·检查§2），`复核` 列留给人的标注。
+    重放（--seed）不覆盖复核为 维持/改判 的行——改判是终审。
+    L1/L2 只由数据到达推进，与人的表态脱钩，不在此臆造。
 """
 from __future__ import annotations
 
@@ -25,7 +29,11 @@ import re
 import sys
 from pathlib import Path
 
-HEADER = ["环节", "AI 能力分", "局限", "输入依赖", "证据等级", "验证状态"]
+HEADER = ["环节", "AI 能力分", "局限", "输入依赖", "证据等级",
+          "验证状态", "依据法条", "复核"]
+REVIEW_STATES = ("未复核", "维持", "改判")
+TABLE = Path(__file__).resolve().parent.parent / "data" / "能力对照表.csv"
+REPLAY_KEEP = ("维持", "改判")  # 判例优先：重放不覆盖
 
 C_WORDS = ["现场", "蹲点", "试吃", "闻", "尝", "口味", "感官", "身体",
            "突发", "情绪", "随机", "在场", "碰不到"]
@@ -38,8 +46,23 @@ HUMAN = re.compile(r"人工|兜底|验证|闻|尝|口味|现场|蹲点|试吃|�
 CONTRAST = re.compile(r"但|缺|不|无法|碰不到|判断不了|未核实|未验证|验证")
 
 
+def basis_of(deps: set[str]) -> str:
+    """判例的法条引用：命中的依X + 标尺 + 适用的检查条文。"""
+    parts = [f"依{d}" for d in sorted(deps, key="ABC".index)] or ["依A"]
+    parts.append("标尺")
+    if deps == {"A"}:
+        parts.append("检查§1")
+    elif deps == {"C"}:
+        parts.append("检查§3")
+    elif "C" in deps:
+        parts.append("检查§2")
+    if "B" in deps:
+        parts.append("检查§4")
+    return "·".join(parts)
+
+
 def derive(name: str, text: str, score: int | None = None, dep: str | None = None) -> list[str]:
-    """材料文本 → 一行六字段。分数与依赖可显式给出，缺省按规则推导。"""
+    """材料文本 → 一行八字段。分数与依赖可显式给出，缺省按规则推导。"""
     if dep is None:
         deps = []
         if any(w in text for w in C_WORDS):
@@ -64,7 +87,8 @@ def derive(name: str, text: str, score: int | None = None, dep: str | None = Non
 
     if not CONTRAST.search(text):
         text = f"{text}；仅通用知识，未喂本地数据"
-    return [name, str(score), text, dep, "L0", "待验证"]
+    deps = {d.strip() for d in dep.split("+")}
+    return [name, str(score), text, dep, "L0", "待验证", basis_of(deps), "未复核"]
 
 
 def parse_seed(path: Path) -> list[list[str]]:
@@ -81,6 +105,28 @@ def parse_seed(path: Path) -> list[list[str]]:
     if not rows:
         sys.exit(f"种子表未解析到任何行：{path}")
     return rows
+
+
+def preserve_reviewed(rows: list[list[str]], table: Path) -> list[list[str]]:
+    """判例优先：重放时保留复核为 维持/改判 的行，未复核行重算。"""
+    if not table.exists():
+        return rows
+    with open(table, encoding="utf-8", newline="") as f:
+        existing = [r for r in csv.reader(f) if r]
+    if not existing or existing[0] != HEADER or any(len(r) != len(HEADER) for r in existing[1:]):
+        return rows  # 旧表头或不完整，无可保留判例
+    reviewed = {r[0]: r for r in existing if r[7] in REPLAY_KEEP}
+    out, kept = [], set()
+    for r in rows:
+        if r[0] in reviewed:
+            out.append(reviewed[r[0]])
+            kept.add(r[0])
+        else:
+            out.append(r)
+    extra = [r for n, r in reviewed.items() if n not in kept]
+    if extra:
+        print(f"判例保留：{[r[0] for r in extra]} 不在种子源中，不删除", file=sys.stderr)
+    return out + extra
 
 
 def to_csv(rows: list[list[str]]) -> str:
@@ -106,9 +152,10 @@ def check(path: Path) -> int:
     for i, row in enumerate(rows, start=2):
         where = f"{path}:{i}"
         if len(row) != len(HEADER) or any(not c.strip() for c in row):
-            bad.append(f"{where} 六字段必须齐全非空：{row}")
+            bad.append(f"{where} 八字段必须齐全非空：{row}")
             continue
-        name, score_s, limit, dep_s, level, status = row
+        name, score_s, limit, dep_s, level, status = row[:6]
+        review = row[7]
         try:
             score = int(score_s)
         except ValueError:
@@ -122,6 +169,8 @@ def check(path: Path) -> int:
             bad.append(f"{where} [{name}] 证据等级非法：{level}（B 类必须标出 L0/L1/L2）")
         if status not in STATUSES:
             bad.append(f"{where} [{name}] 验证状态非法：{status}")
+        if review not in REVIEW_STATES:
+            bad.append(f"{where} [{name}] 复核标注非法：{review}（{'/'.join(REVIEW_STATES)}）")
         if deps == {"A"} and score < 60:
             bad.append(f"{where} [{name}] 纯 A 应 ≥ 60，实为 {score}")
         if "C" in deps and score > 80:
@@ -163,10 +212,15 @@ def main(argv: list[str] | None = None) -> int:
     a = p.parse_args(argv)
     if not a.seed:
         p.error("需要 --seed、eval 或 check")
-    out = to_csv(parse_seed(a.seed))
+    rows = parse_seed(a.seed)
+    merged = preserve_reviewed(rows, TABLE)
+    preserved = [r for r in merged if r[7] in REPLAY_KEEP]
+    rows = merged
+    out = to_csv(rows)
     if a.out:
         a.out.write_text(out, encoding="utf-8")
-        print(f"{a.out}：{len(out.splitlines()) - 1} 行")
+        note = f"，保留已复核判例 {len(preserved)} 行" if preserved else ""
+        print(f"{a.out}：{len(rows)} 行{note}")
     else:
         print(out, end="")
     return 0
