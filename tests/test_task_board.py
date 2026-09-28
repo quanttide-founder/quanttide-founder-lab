@@ -1,7 +1,7 @@
 """任务看板固定测试：锁定读写、状态与清单生成行为。
 
 运行：python3 -m unittest discover -s tests
-不依赖图形界面；修改 src/task_board.py 前后都应保持全绿。
+不依赖图形界面；修改 examples/task-board/task_board.py 前后都应保持全绿。
 """
 
 import json
@@ -11,7 +11,7 @@ import unittest
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO / "src"))
+sys.path.insert(0, str(REPO / "examples" / "task-board"))
 
 import task_board  # noqa: E402
 
@@ -140,6 +140,69 @@ class DataFileTest(unittest.TestCase):
     def test_fixture_is_valid_json(self):
         with open(FIXTURE, encoding="utf-8") as f:
             json.load(f)
+
+
+class ExportMergeTest(unittest.TestCase):
+    """Label Studio 往返：导出携带意见，标注写回并幂等。"""
+
+    def exported(self, tag="先做", text="理由"):
+        return [{
+            "data": {"title": "任务甲"},
+            "annotations": [{
+                "created_at": "2026-09-28T10:00:00.000000Z",
+                "result": [
+                    {"type": "choices", "value": {"choices": [tag]}},
+                    {"type": "textarea", "value": {"text": [text]}},
+                ],
+            }],
+        }]
+
+    def test_build_tasks_carries_feedback(self):
+        data = sample_data()
+        data["state"]["feedback"] = {"任务甲": {"tag": "缓做", "text": "先放放"}}
+        tasks = task_board.build_tasks(data)
+        self.assertEqual(len(tasks), 2)
+        self.assertEqual(tasks[0]["data"]["tag"], "缓做")
+        self.assertEqual(tasks[1]["data"]["tag"], "")
+        self.assertEqual(tasks[0]["id"], 1)
+
+    def test_merge_writes_back(self):
+        data = sample_data()
+        done, unmatched = task_board.apply_annotations(data, self.exported(), now="09-28 18:00")
+        fb = data["state"]["feedback"]["任务甲"]
+        self.assertEqual((done, unmatched), (1, 0))
+        self.assertEqual(fb["tag"], "先做")
+        self.assertEqual(fb["text"], "理由")
+        self.assertEqual(fb["history"][0]["time"], "09-28 18:00")
+
+    def test_merge_is_idempotent(self):
+        data = sample_data()
+        task_board.apply_annotations(data, self.exported(), now="09-28 18:00")
+        done, _ = task_board.apply_annotations(data, self.exported(), now="09-28 18:01")
+        self.assertEqual(done, 0)
+        self.assertEqual(len(data["state"]["feedback"]["任务甲"]["history"]), 1)
+
+    def test_merge_skips_unknown_title(self):
+        data = sample_data()
+        exp = self.exported()
+        exp[0]["data"]["title"] = "不存在的任务"
+        done, unmatched = task_board.apply_annotations(data, exp)
+        self.assertEqual((done, unmatched), (0, 1))
+
+    def test_merge_takes_last_annotation(self):
+        data = sample_data()
+        exp = self.exported()
+        exp[0]["annotations"].append({
+            "created_at": "2026-09-28T11:00:00.000000Z",
+            "result": [
+                {"type": "choices", "value": {"choices": ["不做"]}},
+                {"type": "textarea", "value": {"text": ["改主意了"]}},
+            ],
+        })
+        task_board.apply_annotations(data, exp)
+        fb = data["state"]["feedback"]["任务甲"]
+        self.assertEqual(fb["tag"], "不做")
+        self.assertEqual(fb["text"], "改主意了")
 
 
 if __name__ == "__main__":

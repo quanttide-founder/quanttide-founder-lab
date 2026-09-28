@@ -10,7 +10,7 @@
 |----|------|------|
 | 规格 | `docs/` | 方法论、流程与规则，是持久的沉淀物 |
 | 数据 | `data/` | 案例与语料，结构化是演进方向；程序读写的数据也在这里（如 `data/write/*.json`） |
-| 代码 | `src/` | 轻量脚本，快更迭的验证载体，按需重建与废弃 |
+| 代码 | `examples/` | 轻量脚本，快更迭的验证载体，按需重建与废弃 |
 
 ## 目录结构
 
@@ -21,14 +21,14 @@ data/
   write/     任务扫描数据（*.json，看板读写）
   agent/     情绪结构化推演实例
   work/      工作方式语料
-src/
-  task_board.py   任务看板 GUI（tkinter）
+examples/
+  task-board/  任务评审看板（export/merge 与 Label Studio 往返）
 tests/           固定测试（unittest，不依赖图形界面）
 ```
 
 ## 当前状态
 
-- 任务看板 `src/task_board.py`：读取 `data/write/*.json`，卡片呈现任务，选定与意见反馈自动写回 json；运行 `python3 src/task_board.py [json路径]`，默认打开 `data/write/` 最新一份
+- 任务评审 `examples/task-board/task_board.py`：读取 `data/write/*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
 - 固定测试 `tests/`：`python3 -m unittest discover -s tests`，锁定看板读写与状态行为，改代码先跑它
 - 任务发现规则：`docs/write/task-discovery.md`；写作规则：`docs/write/writing-rules.md`；流程：`docs/write/creation-log-workflow.md`
 
