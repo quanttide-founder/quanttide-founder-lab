@@ -103,7 +103,7 @@ python3 src/ledger.py gaps              # 只看待回填项
 
 ```sh
 python3 src/ledger.py report --mode shop --ticket 32:45 --traffic 15:20 --staff 1200 --utility 800 --food-rate 0.35
-python3 -m unittest discover -s tests   # 31 项回归，无图形环境可跑
+python3 -m unittest discover -s tests   # 39 项回归，无图形环境可跑
 ```
 
 **唯一策略**：缺 L1 不代填、不估算，拒绝计算（退出码 `2`）；数据完整度是结论的可信度指标，估算值不算已填。交互面只有两个：本 CLI 出数据，Label Studio 收人的判断。

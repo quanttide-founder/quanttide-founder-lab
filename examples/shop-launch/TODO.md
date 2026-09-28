@@ -51,16 +51,16 @@
 
 复用 `examples/task-board/`（只读）：清单格式取其 `build_tasks` 的输出结构，标注配置用其 `label-config.xml`（四枚标签：先做/缓做/不做/有异议），写回语义照其 merge 的「按 title 对齐、追加 history、重复幂等」。本目录产出清单与配置副本，不回写 task-board 的 `data/write/`。
 
-- [ ] **2.1 定义待裁决队列**
+- [x] **2.1 定义待裁决队列**
   - 素材三处：`docs/AI 辅助开店.md` 的 L0 假设行、对照表中含 C 环节、`src/ledger.py` 的 `GAPS` 待回填清单
   - 产出：`data/裁决队列.json`，每条含 `title, 环节, 问题, 类型(L0假设/C类判断/L1缺口), 提出日期, feedback(tag/text/history)`
   - 验收：队列条目与三处素材一一对应，无遗漏无重复；`feedback` 结构兼容 task-board 的写回语义
 
-- [ ] **2.2 导出评审卡**
+- [x] **2.2 导出评审卡**
   - 产出：`src/review_export.py`，读 `data/裁决队列.json` → 生成 Label Studio 可导入的任务清单 `data/review/任务清单.json` + 配置副本 `data/review/label-config.xml`（复制 task-board 的，写在本目录）
   - 验收：清单与 task-board `export` 输出同构（`data.title/hint/meta` 字段齐全），用其 `label-config.xml` 建的项目可直接导入本清单
 
-- [ ] **2.3 标注写回**
+- [x] **2.3 标注写回**
   - 产出：`src/review_merge.py`，读 Label Studio 导出 JSON → 写回 `data/裁决队列.json` 的 `feedback`，并推进 `data/能力对照表.csv` 的 `证据等级`（L0→L1→L2）与 `验证状态`（待验证→已验证/已证伪）；已由实地数据校准的 `[锁]` 项拒绝覆盖（`AGENTS.md` 硬约束）
   - 验收：重复 merge 幂等（同标注不重复记账）；`tests/` 覆盖「L0→L1 推进」「锁项被拒」两个用例
 
