@@ -21,7 +21,7 @@
 
 ## 用法
 
-以下命令的工作目录是 `examples/default`：
+以下命令的工作目录是 `examples/quanttide-founder-lab`：
 
 ```sh
 # 检索：重建日志段清单 data/segments.json
