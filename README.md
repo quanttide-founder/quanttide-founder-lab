@@ -34,6 +34,7 @@ examples/
 - 任务评审 `examples/novel-planner/src/planner.py export`：读 `examples/novel-planner/data/*任务扫描*.json`，与 Label Studio 双向往返——`export` 导出任务清单去标注，`merge` 把标注写回 json；工作流见 `docs/dev-guide/label-studio.md`
 - 固定测试 `python3 -m unittest discover -s examples/novel-planner/tests`：锁定切段、规则与看板读写行为，改代码前先跑
 - 任务发现规则：`data/write/task-discovery.md`；写作规则：`data/write/writing-rules.md`；流程：`data/write/creation-log-workflow.md`
+- 双库生成控制（实验中）：风格规则库 + 情节账本，生成前注入、生成后回流，验证 H1–H4；规格与旋钮见 `examples/novel-planner/docs/dual-library.md`，骨架护栏在 `examples/novel-planner/src/dual_library.py`
 
 ## 工作方式
 

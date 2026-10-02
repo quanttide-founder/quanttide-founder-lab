@@ -13,6 +13,14 @@ emotion  ：从 memory 原始日志段为情绪日记草稿捞相关片段，写
 export   ：把 data/ 下最新一份任务扫描导出为 Label Studio 可导入的任务清单
 merge    ：把 Label Studio 标注按 title 写回 state.feedback（重复导入幂等）
 
+双库生成控制（docs/dual-library.md）：
+rules    ：查看风格规则库（启用数/上限 12）
+ledger   ：查看情节账本（按类型计数/未解欠账）
+generate ：组装上下文并写生成快照（不调模型，文本槽留空）
+annotate ：记录一组偏差计数（group type --count）
+backflow ：把偏差回流进规则库/账本（带跨库护栏）
+report   ：计算四组偏差指标
+
 标注配置 label-config.xml 建项目时导入；检索金标在 data/related/*.json。
 中间数据一律 JSON，程序不读写文档。检索口径见 docs/experiment.md，
 看板写回规则见 task_board.py。
@@ -24,6 +32,7 @@ from pathlib import Path
 
 import searcher
 import task_board
+import dual_library
 
 # 代码在 src/，PROJECT 取项目根（数据与语料都在它外面或下面）
 PROJECT = Path(__file__).resolve().parent.parent
@@ -61,7 +70,10 @@ def cmd_emotion(argv: list) -> None:
 def main(argv: list = None) -> None:
     argv = sys.argv[1:] if argv is None else argv
     usage = __doc__
-    if not argv or argv[0] not in ("segments", "emotion", "export", "merge"):
+    if not argv or argv[0] not in (
+        "segments", "emotion", "export", "merge",
+        "rules", "ledger", "generate", "annotate", "backflow", "report",
+    ):
         print(usage, file=sys.stderr)
         raise SystemExit(2)
     cmd, rest = argv[0], argv[1:]
@@ -71,8 +83,13 @@ def main(argv: list = None) -> None:
         cmd_emotion(rest)
     elif cmd == "export":
         task_board.cmd_export(rest)
-    else:
+    elif cmd == "merge":
         task_board.cmd_merge(rest)
+    elif cmd in ("rules", "ledger", "generate", "annotate", "backflow", "report"):
+        getattr(dual_library, "cmd_" + cmd)(rest)
+    else:
+        print(usage, file=sys.stderr)
+        raise SystemExit(2)
 
 
 if __name__ == "__main__":

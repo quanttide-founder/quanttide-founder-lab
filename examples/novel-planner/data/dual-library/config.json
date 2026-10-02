@@ -1,0 +1,23 @@
+{
+  "run_profile": "first_pass",
+  "note": "旋钮集中于此，改这里不影响骨架（docs/dual-library.md §3 invariant）。",
+  "knobs": {
+    "test_text_chapters": 3,
+    "ledger_density": "key_only",
+    "enabled_rules": 3,
+    "gen_length": 600,
+    "annotation_granularity": "count_only",
+    "backflow_rounds": 1,
+    "scene_complexity": "dialogue_plus_objects",
+    "evaluator": "self"
+  },
+  "first_pass_defaults": {
+    "test_text": "3 章，选含「拖鞋」线索的章节",
+    "ledger_backfill": "只扒：物件位置 / 人物已知信息 / 未解欠账",
+    "enabled_rules": "3 条兜底（心理标签 / 总结比喻 / 汇报式台词）",
+    "gen_length": 600,
+    "annotation": "只数违例次数，不摘录原文",
+    "backflow_rounds": 1,
+    "scenes": 1
+  }
+}

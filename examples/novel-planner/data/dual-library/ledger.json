@@ -1,0 +1,13 @@
+{
+  "schema": {
+    "entry_id": "string",
+    "type": "fact | debt | inventory",
+    "chapter_id": "string",
+    "content": "string",
+    "resolved": "bool",
+    "tags": ["string"]
+  },
+  "entries": [],
+  "pending": [],
+  "note": "初始为空。从 data/dual-library/source/ 的测试文本回溯补录：≥10 fact、≥5 debt、≥5 inventory。第一版只扒物件位置/人物已知信息/未解欠账。"
+}

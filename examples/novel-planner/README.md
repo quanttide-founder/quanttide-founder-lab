@@ -39,6 +39,15 @@ python3 examples/novel-planner/src/planner.py merge <Label Studio 导出.json>
 
 # 固定回归（改代码前先跑）
 python3 -m unittest discover -s examples/novel-planner/tests
+
+# 双库生成控制（实验，见 docs/dual-library.md）
+python3 examples/novel-planner/src/planner.py rules          # 查看规则库（启用数/上限 12）
+python3 examples/novel-planner/src/planner.py ledger         # 查看账本
+python3 examples/novel-planner/src/planner.py ledger --backfill   # 从 source/测试文本.md 解析回填账本
+python3 examples/novel-planner/src/planner.py generate D --scene scene.json   # 组装并写快照
+python3 examples/novel-planner/src/planner.py annotate A style --count 2      # 记偏差
+python3 examples/novel-planner/src/planner.py backflow       # 回流（带跨库护栏）
+python3 examples/novel-planner/src/planner.py report         # 指标
 ```
 
 ## 检索口径

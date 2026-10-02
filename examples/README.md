@@ -4,7 +4,7 @@
 
 ## 案例
 
-- [novel-planner](novel-planner/README.md)：小说策划助手，从 memory 原始日志为加工中的创作素材捞相关片段（联想检索），并把任务扫描导出到 Label Studio 标注、再把标注写回 JSON。
+- [novel-planner](novel-planner/README.md)：小说策划助手。三条能力轨：① 联想检索（从 memory 原始日志为创作素材捞相关片段）；② 任务评审看板（任务扫描导出 Label Studio 标注、写回 JSON）；③ 双库生成控制（风格规则库 + 情节账本，实验性，见 `novel-planner/docs/dual-library.md`）。
 
 开店助手（原 `shop-launch`）已移交 `roadriver-tech` 仓库 `apps/shop-launcher`。
 
