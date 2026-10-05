@@ -92,7 +92,7 @@
 
 ## 四、存量问题
 
-### 9. `data/segments.json` 过时
+### 14. `data/segments.json` 过时
 
 **现状**：提交的基线 51 段，现语料能切 87 段。它是「Python 切段 == Rust 原版」的对照基线（本案例从 Rust 版的 knowl-searcher 移植而来），语料一生长前提就破——`tests/test_searcher.py` 里那条 parity 测试因此在真目录里红着，与代码无关。
 
