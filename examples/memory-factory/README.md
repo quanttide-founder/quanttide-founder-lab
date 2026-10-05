@@ -41,4 +41,10 @@
 
 ## 现状
 
-规格阶段。可复用的切段与检索模块抽取在实验室 `src/`（`segmentation.py`、`retrieval.py`），本案例的代码按实验室快更迭原则另建。
+口径阶段。**口径未定，最小版本不能跑**——未定之前跑出来的数字不可用。
+
+已完成：假设拆解（`docs/assumption.md`）、意图（`docs/intent.md`）、规格（`docs/spec.md`）、验收（`docs/criteria.md`）、交付方式（本文件）、TODO（`TODO.md`）；切段与两臂检索已抽到实验室 `src/segmentation.py`、`src/retrieval.py`。
+
+待做：见 `TODO.md`，按「一、口径与判据 → 二、最小版本 → 三、存量问题」的顺序，每条附了怎么核。
+
+验收对照 `docs/criteria.md`：机械正确性与矛盾保留率抽检，意义正确性由操作者判。本轮修改要点——匹配从「三档覆盖」改成一条判断链（先问有无对应条目、再问方向是否一致），「部分覆盖」一档砍掉；判据「方向相反」写进 `docs/assumption.md`；矛盾保留率写成条款。
