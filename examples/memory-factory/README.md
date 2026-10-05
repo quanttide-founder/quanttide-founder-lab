@@ -10,6 +10,7 @@
 
 ## 目录
 
+- `docs/assumption.md` —— 程序立在什么假设上，哪一层不成立
 - `docs/intent.md` —— 为什么做，边界在哪
 - `docs/spec.md` —— 程序做什么、判据、步骤、最小版本
 - `docs/criteria.md` —— 怎么验收
