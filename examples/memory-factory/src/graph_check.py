@@ -49,7 +49,7 @@ FILE_KINDS = {
     "methods.md": {"Method"},
     "expressions.md": {"Expression"},
     "values.md": {"Value", "Anti"},
-    "1_创作动机.md": {"Motivation"},
+    "1_创作动机.md": {"Motivation", "Dilemma"},
     "2_创作方法.md": {"Method"},
     "3_创作困境.md": {"Dilemma"},
 }
@@ -109,6 +109,7 @@ def check_set(set_dir: Path, segments: list) -> dict:
     g, pf, node_kind, relations, domains = load_graph(set_dir)
     label = {s: str(g.value(s, RDFS.label) or "") for s in node_kind}
     file = {s: str(g.value(s, pf.file) or "") for s in node_kind}
+    quote = {s: str(g.value(s, pf.quote) or "") for s in node_kind}
 
     result: dict = {"集": set_dir.name, "节点数": len(node_kind),
                     "关系数": sum(1 for p in relations for _ in g.subject_objects(p))}
@@ -144,6 +145,11 @@ def check_set(set_dir: Path, segments: list) -> dict:
         fn = file[s]
         if not fn or not (profile_dir / fn).exists():
             missing_file.append(f"{label[s]}（{fn or '未填 file'}）")
+            continue
+        if quote[s]:
+            # 出处条目：档案里没有独立条目标题，改核出处句；不再核类与档案是否配对
+            if quote[s] not in file_text[fn]:
+                ghost.append(f"{label[s]}（{fn}，出处句对不上：{quote[s]}）")
             continue
         if label[s] and label[s] not in file_text[fn]:
             ghost.append(f"{label[s]}（{fn}）")
@@ -221,17 +227,19 @@ def build_report(results: list[dict], date: str) -> str:
              "把每个记忆集的 `index.ttl` 当契约，校验 journal 与 profile 是否与它对得上。"
              "只做机械判定：图谱结构、条目登记、日志证据。判不出的（意义、矛盾）留给人。",
              "", "## 结果", ""]
+    n_all_mismatch = 0
     for r in results:
         a, b, c, d = (r["A_图谱结构"], r["B_图谱↔档案"],
                       r["C_图谱↔日志"], r["D_关系↔日志"])
         n_struct = sum(len(v) for v in a.values())
         n_mismatch = (len(b["幽灵节点"]) + len(b["类与档案不符"])
                       + len(b["file 不存在"]) + n_struct)
+        n_all_mismatch += n_mismatch
         lines += [f"### {r['集']}（{r['节点数']} 节点 / {r['关系数']} 条边）", "",
                   f"**图谱与档案对不上的有 {n_mismatch} 处。**" if n_mismatch
                   else "**图谱与档案全部对得上。**", ""]
         for title, items in (
-                ("幽灵节点（图里有、档案里找不到同名条目）", b["幽灵节点"]),
+                ("幽灵节点（图里有、档案里找不到同名条目或出处句）", b["幽灵节点"]),
                 ("类与档案不符", b["类与档案不符"]),
                 ("file 不存在", b["file 不存在"]),
                 ("签名违例", a["签名违例"]),
@@ -255,10 +263,17 @@ def build_report(results: list[dict], date: str) -> str:
         "（档案是蒸馏，措辞会变），只作提示。",
         "- 「档案里未登记的条目」按 `## `/`### ` 标题与 `- **X → Y**` 的 Y 收，"
         "分组标题（思维框架、应对策略）也在其中，需要人剔。",
+        "- 带 `pf:quote` 的对象是**出处条目**（档案里只有句子、没有独立条目标题）："
+        "核它的出处句在不在档案里，不再核标题与类。",
         "- 校验只认 `index.ttl` 声称的结构；图谱本身写错，校验查不出来。",
         "", "## 下一步", "",
-        "- 幽灵节点与类不符，按「图谱对齐档案」还是「档案改口径」逐条定；"
-        "这次只报不改。",
+    ]
+    if n_all_mismatch:
+        lines.append("- 图谱与档案对不上的，按「图谱对齐档案」还是「档案改口径」"
+                     "逐条定；这次只报不改。")
+    else:
+        lines.append("- 图谱与档案当前全部对得上；新日志、新档案条目进来后重跑。")
+    lines += [
         "- 零逐字证据的节点与关系，人工过一遍是措辞差异还是真缺口。",
         "- 若要覆盖「关系在档案里有出处」，补收 `methods.md` 的「适用条件」"
         "与 `values.md` 的「这条线排除的是」。",

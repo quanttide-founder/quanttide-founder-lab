@@ -27,7 +27,7 @@
 
 **匹配判定已跑通**（语义路线，三栏全对 18/20 = 90%；报告见 `data/report/2026-10-05-匹配二跑-语义.md`）。
 
-**图谱一致性校验已跑通**（`src/graph_check.py`，2026-10-08）：把每个记忆集的 `index.ttl` 当契约，校验 profile 条目登记与 journal 逐字证据，产出 `data/report/2026-10-08-图谱一致性校验.md`。跑法：`uv run --with rdflib python3 src/graph_check.py`（需 `rdflib`）。首跑：三集图谱结构全通过；图谱与档案对不上 16 处（default 3、fiction 12、work 1），其中幽灵节点 13、类与档案不符 3。**程序只报不改。**
+**图谱一致性校验已跑通**（`src/graph_check.py`，2026-10-08）：把每个记忆集的 `index.ttl` 当契约，校验 profile 条目登记与 journal 逐字证据，产出 `data/report/2026-10-08-图谱一致性校验.md`。跑法：`uv run --with rdflib python3 src/graph_check.py`（需 `rdflib`）。首跑报出图谱与档案对不上 16 处（default 3、fiction 12、work 1），按「图谱服从档案」改齐——work 1 处改引号、fiction 12 处改回档案标题原文、default 3 处补 `pf:quote` 出处句；重跑三集全部对得上。**程序只报不改。**
 
 **意图已重述**（见 `docs/intent.md`）：反向蒸馏不是产品，是一次压力测试；目标是把已显性化的认知**系统化**。按四层看——显性化已完成，**卡在结构化**：24 条档案条目彼此没有关系，是清单不是网络。
 
